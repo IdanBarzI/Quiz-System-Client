@@ -1,0 +1,40 @@
+.form-actions {
+  display: flex;
+  justify-content: space-around;
+}
+
+.form-btn {
+  border: none;
+  outline: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.top-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-login {
+  color: var(--secondery-bg-color);
+  width: 100%;
+  padding: 10px;
+  background-color: var(--primary-color);
+  border-radius: 5px;
+  margin-top: 15%;
+}
+
+.btn-reset {
+  color: var(--primary-color);
+  background-color: rgba(0, 0, 0, 0);
+  justify-self: flex-end;
+}
+
+.btn-login:hover {
+  background-color: var(--secondery-color);
+}
+
+.error-msg {
+  color: red;
+  font-size: 0.8rem;
+}

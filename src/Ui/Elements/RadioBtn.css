@@ -1,0 +1,12 @@
+.RadioBtn li.selected .Icon {
+    color: var(--accent);
+}
+
+.RadioBtn li:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.RadioBtn li:active {
+    opacity: 0.9;
+}

@@ -1,0 +1,45 @@
+body {
+  margin: 0;
+  font-family: "Segoe UI";
+
+  background-image: url(./assets/back-ground.svg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+}
+
+[data-theme="light"] {
+  --primary-color: #ffffff;
+  --secondery-color: #cccccc;
+
+  --oppesit-primary-color: #1b1b1b;
+  --oppesit-secondery-color: #212121;
+
+  --primary-bg-color: #424242;
+  --secondery-bg-color: #264eca;
+
+  --defult-text-size: 1rem;
+
+  --gap: 20px;
+  --gap-m: 15px;
+  --gap-s: 10px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #1b1b1b;
+  --secondery-color: #212121;
+
+  --oppesit-primary-color: #ffffff;
+  --oppesit-secondery-color: #cccccc;
+
+  --primary-bg-color: #424242;
+  --secondery-bg-color: #264eca;
+
+  --defult-text-size: 1rem;
+
+  --gap: 20px;
+  --gap-m: 15px;
+  --gap-s: 10px;
+}

@@ -1,0 +1,16 @@
+.CheckBox{
+    border: 3px solid var(--border-color);
+    background-color: var(--accent);
+    padding: var(--gap-m) var(--gap);
+    color: var(--text-color);
+}
+
+
+.CheckBox:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.CheckBox:active{
+    opacity: 0.9;
+}

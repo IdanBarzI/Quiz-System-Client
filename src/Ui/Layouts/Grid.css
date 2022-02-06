@@ -1,0 +1,23 @@
+.Grid {
+    display: grid;
+    height: 100%;
+}
+
+
+.Grid.rows > :nth-child(1) {
+    background-color: var(--primay-color);
+    color: var(--text-color);
+    padding: 0 var(--gap);
+}
+
+.Grid.rows {
+    grid-template-rows: 60px 1fr;
+}
+
+.Grid.columns {
+     grid-template-columns: 160px 1fr;
+}
+
+.Grid.columns > :nth-child(1) {
+    background-color: var(--light-color);
+}
