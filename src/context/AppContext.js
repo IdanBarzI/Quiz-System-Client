@@ -13,9 +13,9 @@ export const AppContextProvider = (props) => {
     <SettingsContextProvider>
       <AppContext.Provider
         value={{
-          user: user,
+          user,
           setUser: setUser,
-          token: token,
+          token,
           setToken: setToken,
         }}
       >

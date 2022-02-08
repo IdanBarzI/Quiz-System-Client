@@ -1,0 +1,32 @@
+.message {
+  position: absolute;
+  top: 1%;
+  left: 36%;
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 2% 0 2% 0;
+  color: var(--primary-color);
+}
+
+.error {
+  font-size: 20rem;
+  text-align: center;
+  margin: 0;
+}
+
+.rotate {
+  position: absolute;
+  top: 38%;
+  left: -4%;
+
+  background: none;
+  transform-origin: 0 20px 0;
+  -moz-transform-origin: 0 20px 0;
+  -ms-transform-origin: 0 20px 0;
+  -o-transform-origin: 0 20px 0;
+
+  transform: rotate(307deg);
+  -moz-transform: rotate(307deg);
+  -ms-transform: rotate(307deg);
+  -o-transform: rotate(307deg);
+}

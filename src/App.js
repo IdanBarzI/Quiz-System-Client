@@ -1,27 +1,40 @@
-import React, { useContext } from "react";
-import { Route } from "react-router-dom";
-import LoginSignUpManager from "./components/LoginSignUpManager";
-import NavBar from "./components/NavBar/NavBar";
-import SettingsContext from "./context/SettingsContext";
-import Welcome from "./pages/Welcome";
-import Products from "./pages/Products";
+import React, { Fragment } from "react";
+import { Route, Switch } from "react-router-dom";
+import {
+  Login,
+  SignUp,
+  MainMenu,
+  Questions,
+  Tests,
+  Report,
+  StudentTest,
+  NotFound,
+} from "./pages";
+import Layout from "./components/layout/Layout";
 import "./App.css";
 
 function App() {
-  const ctx = useContext(SettingsContext);
-
   return (
-    <div className="app" data-theme={`${ctx.theme ? "light" : "dark"}`}>
-      <NavBar />
-      <main>
-        <Route path="/login">
-          <LoginSignUpManager />
-        </Route>
-        <Route path="/products">
-          <Products />
-        </Route>
-      </main>
-    </div>
+    <Layout>
+      <Switch>
+        <Route path="/" exact component={Login} />
+        <Route path="/login" component={Login} />
+
+        <Route path="/signup" component={SignUp} />
+
+        <Route path="/admin/main-menu" component={MainMenu} exact />
+
+        <Route path="/admin/questions" component={Questions} exact />
+
+        <Route path="/admin/tests" component={Tests} exact />
+
+        <Route path="/admin/reports" component={Report} exact />
+
+        <Route path="/student/test" component={StudentTest} exact />
+
+        <Route path="*" component={NotFound} />
+      </Switch>
+    </Layout>
   );
 }
 

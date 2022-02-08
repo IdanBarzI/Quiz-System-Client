@@ -1,10 +1,9 @@
 import React, { useState, useReducer, useContext } from "react";
+import { useHistory } from "react-router-dom";
 import "./LoginForm.css";
 import AppContext from "../../context/AppContext";
-import Input from "../../Ui/Elements/Input";
-import Icon from "../../Ui/Elements/Icon";
-import ToolTip from "../../Ui/Elements/ToolTip";
-import axios from "axios";
+import { Input, Icon, ToolTip } from "../Ui";
+import serverAccess from "../../api/serverAccess";
 import { UPDATE_FORM, onFocusOut } from "../../lib/loginFormUtils";
 
 const initialState = {
@@ -32,25 +31,30 @@ const LoginForm = (props) => {
   const [formState, dispatch] = useReducer(formsReducer, initialState);
   const ctx = useContext(AppContext);
   const [isLoading, setIsLoading] = useState(false);
+  const history = useHistory();
 
   const formSubmissionHandler = (event) => {
     event.preventDefault();
     setIsLoading(true);
     if (formState.isFormValid) {
-      axios
-        .post("http://localhost:5000/users/login", {
+      serverAccess
+        .post("/users/login", {
           email: formState.email.value,
           password: formState.password.value,
         })
         .then(function (response) {
           setIsLoading(false);
           if (response.status !== 200) {
+            //show error to the user
+            return;
           }
-          ctx.user = response.data.user;
-          ctx.token = response.data.token;
+          ctx.setUser(response.data.user);
+          ctx.setToken(response.data.token);
+          history.replace("/admin/main-menu");
         })
         .catch(function (error) {
           setIsLoading(false);
+          //show error to the user
           console.log(error);
         });
       console.log(isLoading);
@@ -110,6 +114,7 @@ const LoginForm = (props) => {
           </button>
         )}
       </div>
+      <div>123456789</div>
     </form>
   );
 };
