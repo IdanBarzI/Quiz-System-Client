@@ -1,71 +1,66 @@
-import React, { useState } from "react";
+import React, { useState, useReducer, useContext } from "react";
 import "./LoginForm.css";
+import AppContext from "../../context/AppContext";
 import Input from "../../Ui/Elements/Input";
 import Icon from "../../Ui/Elements/Icon";
 import ToolTip from "../../Ui/Elements/ToolTip";
-import validator from "validator";
 import axios from "axios";
+import { UPDATE_FORM, onFocusOut } from "../../lib/loginFormUtils";
+
+const initialState = {
+  email: { value: "", touched: false, hasError: false, error: "" },
+  password: { value: "", touched: false, hasError: false, error: "" },
+  isFormValid: true,
+};
+
+const formsReducer = (state, action) => {
+  switch (action.type) {
+    case UPDATE_FORM:
+      const { name, value, touched, hasError, error, isFormValid } =
+        action.data;
+      return {
+        ...state,
+        [name]: { ...state[name], touched, value, hasError, error },
+        isFormValid,
+      };
+    default:
+      return state;
+  }
+};
 
 const LoginForm = (props) => {
-  const [enteredEmail, setEnteredEmail] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [enteredEmailIsValid, setEnteredEmailIsValid] = useState(true);
-  const [enteredPassword, setEnteredPassword] = useState("");
-  const [enteredFormIsValid, setEnteredFormIsValid] = useState(true);
-
-  const emailInputChangeHandler = (event) => {
-    setEnteredEmail(event.target.value);
-    console.log(event.target.value);
-  };
-
-  const passwordInputChangeHandler = (event) => {
-    setEnteredPassword(event.target.value);
-  };
-
-  const validateEmail = () => {
-    if (!validator.isEmail(enteredEmail)) {
-      setEmailError("Enter a valid Email!");
-      console.log(enteredEmail);
-      console.log(false);
-      setEnteredEmailIsValid(false);
-      return false;
-    }
-
-    setEnteredEmailIsValid(true);
-    console.log(true);
-    return true;
-  };
+  const [formState, dispatch] = useReducer(formsReducer, initialState);
+  const ctx = useContext(AppContext);
+  const [isLoading, setIsLoading] = useState(false);
 
   const formSubmissionHandler = (event) => {
     event.preventDefault();
-    setEnteredFormIsValid(true);
-    if (!validateEmail()) {
-      return;
+    setIsLoading(true);
+    if (formState.isFormValid) {
+      axios
+        .post("http://localhost:5000/users/login", {
+          email: formState.email.value,
+          password: formState.password.value,
+        })
+        .then(function (response) {
+          setIsLoading(false);
+          if (response.status !== 200) {
+          }
+          ctx.user = response.data.user;
+          ctx.token = response.data.token;
+        })
+        .catch(function (error) {
+          setIsLoading(false);
+          console.log(error);
+        });
+      console.log(isLoading);
     }
-
-    axios
-      .post("http://localhost:5000/users/login", {
-        email: enteredEmail,
-        password: enteredPassword,
-      })
-      .then(function (response) {
-        console.log(response.status);
-        if (response.status !== 200) {
-          setEnteredFormIsValid(false);
-          return;
-        }
-        console.log(response);
-        setEnteredFormIsValid(true);
-      })
-      .catch(function (error) {
-        setEnteredFormIsValid(false);
-      });
   };
 
   const formReset = (event) => {
     event.preventDefault();
-    setEnteredEmailIsValid(true);
-    setEnteredFormIsValid(true);
+    console.log(ctx.user);
+    console.log(ctx.token);
   };
 
   return (
@@ -85,9 +80,12 @@ const LoginForm = (props) => {
         <Input
           name="Email"
           i="envelope"
-          enteredvalueIsValid={enteredEmailIsValid}
-          errorMsg={emailError}
-          onChange={emailInputChangeHandler}
+          hasError={formState.email.hasError}
+          errorMsg={formState.email.error}
+          touched={formState.email.touched}
+          onBlur={(e) => {
+            onFocusOut("email", e.target.value, dispatch, formState);
+          }}
         />
       </div>
       <div className="form-control password">
@@ -95,17 +93,22 @@ const LoginForm = (props) => {
           type="password"
           name="Password"
           i="lock"
-          enteredvalueIsValid={true}
-          onChange={passwordInputChangeHandler}
+          hasError={formState.password.hasError}
+          errorMsg={formState.password.error}
+          touched={formState.password.touched}
+          onBlur={(e) => {
+            onFocusOut("password", e.target.value, dispatch, formState);
+          }}
         />
       </div>
-      {!enteredFormIsValid && (
-        <p className="error-msg">Your password or email are incorrect</p>
-      )}
       <div className="form-actions">
-        <button type="submit" className="form-btn btn-login">
-          LOGIN
-        </button>
+        {isLoading ? (
+          <p>Sending</p>
+        ) : (
+          <button type="submit" className="form-btn btn-login">
+            LOGIN
+          </button>
+        )}
       </div>
     </form>
   );

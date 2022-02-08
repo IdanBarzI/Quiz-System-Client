@@ -15,7 +15,7 @@
   -webkit-appearance: none;
   border-radius: 50px;
   outline: none;
-  border: 2px solid var(--primary-color);
+  border: 2px solid var(--orange-color);
   transition: all 0.2s;
 }
 
@@ -36,7 +36,7 @@
 }
 
 .toggle:checked {
-  border: 2px solid var(--oppesit-primary-color);
+  border: 2px solid var(--orange-color);
 }
 
 .dot {

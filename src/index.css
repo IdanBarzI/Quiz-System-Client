@@ -1,45 +1,45 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  font-family: "Segoe UI";
 
   background-image: url(./assets/back-ground.svg);
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
-  height: 100%;
-  width: 100%;
+}
+
+html {
+  font-family: "Segoe UI";
+}
+
+:root {
+  --secondery-bg-color: #264eca;
+  --primary-bg-color: #424242;
+
+  --defult-text-size: 1rem;
+
+  --gap: 20px;
+  --gap-m: 15px;
+  --gap-s: 10px;
 }
 
 [data-theme="light"] {
   --primary-color: #ffffff;
   --secondery-color: #cccccc;
+  --orange-color: #ff8800;
 
   --oppesit-primary-color: #1b1b1b;
   --oppesit-secondery-color: #212121;
-
-  --primary-bg-color: #424242;
-  --secondery-bg-color: #264eca;
-
-  --defult-text-size: 1rem;
-
-  --gap: 20px;
-  --gap-m: 15px;
-  --gap-s: 10px;
 }
 
 [data-theme="dark"] {
   --primary-color: #1b1b1b;
   --secondery-color: #212121;
+  --orange-color: #cc721e;
 
   --oppesit-primary-color: #ffffff;
   --oppesit-secondery-color: #cccccc;
-
-  --primary-bg-color: #424242;
-  --secondery-bg-color: #264eca;
-
-  --defult-text-size: 1rem;
-
-  --gap: 20px;
-  --gap-m: 15px;
-  --gap-s: 10px;
 }
