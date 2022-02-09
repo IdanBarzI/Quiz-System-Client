@@ -1,5 +1,5 @@
 import React, { useState, useReducer, useContext } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./LoginForm.css";
 import AppContext from "../../context/AppContext";
 import { Input, Icon, ToolTip } from "../Ui";
@@ -31,7 +31,7 @@ const LoginForm = (props) => {
   const [formState, dispatch] = useReducer(formsReducer, initialState);
   const ctx = useContext(AppContext);
   const [isLoading, setIsLoading] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const formSubmissionHandler = (event) => {
     event.preventDefault();
@@ -50,7 +50,7 @@ const LoginForm = (props) => {
           }
           ctx.setUser(response.data.user);
           ctx.setToken(response.data.token);
-          history.replace("/admin/main-menu");
+          navigate("/admin/main-menu", { replace: true });
         })
         .catch(function (error) {
           setIsLoading(false);

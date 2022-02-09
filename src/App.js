@@ -1,5 +1,5 @@
-import React, { Fragment } from "react";
-import { Route, Switch } from "react-router-dom";
+import React, { Fragment, useContext } from "react";
+import { Route, Routes } from "react-router-dom";
 import {
   Login,
   SignUp,
@@ -12,28 +12,34 @@ import {
 } from "./pages";
 import Layout from "./components/layout/Layout";
 import "./App.css";
+import AppContext from "./context/AppContext";
 
 function App() {
+  const context = useContext(AppContext);
+
   return (
     <Layout>
-      <Switch>
-        <Route path="/" exact component={Login} />
-        <Route path="/login" component={Login} />
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
 
-        <Route path="/signup" component={SignUp} />
+        <Route path="/signup" element={<SignUp />} />
+        {context.token && (
+          <Fragment>
+            <Route path="/admin/main-menu" element={<MainMenu />} />
 
-        <Route path="/admin/main-menu" component={MainMenu} exact />
+            <Route path="/admin/questions" element={<Questions />} />
 
-        <Route path="/admin/questions" component={Questions} exact />
+            <Route path="/admin/tests" element={<Tests />} />
 
-        <Route path="/admin/tests" component={Tests} exact />
+            <Route path="/admin/reports" component={<Report />} />
 
-        <Route path="/admin/reports" component={Report} exact />
+            <Route path="/student/test" element={<StudentTest />} />
+          </Fragment>
+        )}
 
-        <Route path="/student/test" component={StudentTest} exact />
-
-        <Route path="*" component={NotFound} />
-      </Switch>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </Layout>
   );
 }

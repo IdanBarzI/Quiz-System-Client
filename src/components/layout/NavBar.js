@@ -1,6 +1,6 @@
-import React, { useContext, useEffect } from "react";
+import React, { Fragment, useContext, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import { ToggleSwitch, Accordion } from "../Ui";
+import { ToggleSwitch, HoverBox } from "../Ui";
 import SettingsContext from "../../context/SettingsContext";
 import classes from "./NavBar.module.css";
 import AppContext from "../../context/AppContext";
@@ -22,28 +22,53 @@ const NavBar = (props) => {
   return (
     <header className={classes.header}>
       <div className={classes.logo}></div>
-      <nav>
+      <nav className={classes.nav}>
         <ul>
           <li className={classes.settings}>
-            <ToggleSwitch onChange={settingCtx.onThemeSwitch} />
-            {appCtx.user && <select name="fields">{renderFields()}</select>}
+            <HoverBox i="cog">
+              <ToggleSwitch onChange={settingCtx.onThemeSwitch} />
+              {appCtx.user && <select name="fields">{renderFields()}</select>}
+            </HoverBox>
           </li>
-          <li></li>
-          <li>
-            <NavLink activeClassName={classes.active} to="/signup">
-              Signup
-            </NavLink>
-          </li>
-          <li>
-            <NavLink activeClassName={classes.active} to="/login">
-              Login
-            </NavLink>
-          </li>
-          <li>
-            <NavLink activeClassName={classes.active} to="/admin/main-menu">
-              Menu
-            </NavLink>
-          </li>
+          {!appCtx.token && (
+            <Fragment>
+              <li>
+                <NavLink
+                  className={(navData) =>
+                    navData.isActive ? classes.active : ""
+                  }
+                  to="/signup"
+                >
+                  Signup
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  className={(navData) =>
+                    navData.isActive ? classes.active : ""
+                  }
+                  to="/login"
+                  to="/"
+                >
+                  Login
+                </NavLink>
+              </li>
+            </Fragment>
+          )}
+          {appCtx.token && (
+            <Fragment>
+              <li>
+                <NavLink
+                  className={(navData) =>
+                    navData.isActive ? classes.active : ""
+                  }
+                  to="/admin/main-menu"
+                >
+                  Menu
+                </NavLink>
+              </li>
+            </Fragment>
+          )}
         </ul>
       </nav>
     </header>

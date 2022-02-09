@@ -14,3 +14,4 @@ export { default as RadioBtn } from "./Elements/RadioBtn";
 export { default as Accordion } from "./Elements/Accordion";
 export { default as ToggleSwitch } from "./Elements/ToggleSwitch";
 export { default as ToolTip } from "./Elements/ToolTip";
+export { default as HoverBox } from "./Elements/HoverBox";
