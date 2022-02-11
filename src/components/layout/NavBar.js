@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect } from "react";
+import React, { Fragment, useContext, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import { ToggleSwitch, HoverBox } from "../Ui";
 import SettingsContext from "../../context/SettingsContext";
@@ -12,7 +12,7 @@ const NavBar = (props) => {
   const renderFields = () => {
     return appCtx.user.organization.fields.map((field) => {
       return (
-        <option key={field._id} value={field}>
+        <option key={field._id} value={JSON.stringify(field)} >
           {field.title}
         </option>
       );
@@ -27,7 +27,13 @@ const NavBar = (props) => {
           <li className={classes.settings}>
             <HoverBox i="cog">
               <ToggleSwitch onChange={settingCtx.onThemeSwitch} />
-              {appCtx.user && <select name="fields">{renderFields()}</select>}
+              {appCtx.user && 
+                <>
+                  <p>Please select field of study:</p>
+                  <select className={classes.select} name="fields" onChange={(e)=>appCtx.setFieldOfStudy(JSON.parse(e.target.value))}>{renderFields()}</select>
+                </>
+                
+              }
             </HoverBox>
           </li>
           {!appCtx.token && (
@@ -62,9 +68,29 @@ const NavBar = (props) => {
                   className={(navData) =>
                     navData.isActive ? classes.active : ""
                   }
-                  to="/admin/main-menu"
+                  to="/admin/questions"
                 >
-                  Menu
+                  Questions
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  className={(navData) =>
+                    navData.isActive ? classes.active : ""
+                  }
+                  to="/admin/tests"
+                >
+                  Tests
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  className={(navData) =>
+                    navData.isActive ? classes.active : ""
+                  }
+                  to="/admin/reports"
+                >
+                  Reports
                 </NavLink>
               </li>
             </Fragment>

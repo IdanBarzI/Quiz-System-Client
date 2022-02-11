@@ -1,0 +1,17 @@
+.content{
+    height: 80vh;
+    width: 90vw;
+    background-color: lightblue;
+    position: absolute;
+    top:5rem;
+    border: 1px solid black;
+    border-radius: 10px;
+
+}
+.close{
+    position: absolute;
+    top: -1%;
+    left: 98%;
+    border-radius: 50%;
+    cursor: pointer;
+}

@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from "react";
+import React, { Fragment, useContext, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import {
   Login,
@@ -6,7 +6,7 @@ import {
   MainMenu,
   Questions,
   Tests,
-  Report,
+  Reports,
   StudentTest,
   NotFound,
 } from "./pages";
@@ -16,6 +16,17 @@ import AppContext from "./context/AppContext";
 
 function App() {
   const context = useContext(AppContext);
+
+  useEffect(()=>{
+      const storageToken =localStorage.getItem("Json-Web-Token")
+      const user = localStorage.getItem('user')
+      if(!context.token && storageToken){
+          context.setToken(storageToken)
+      }
+      if(!context.user && user){
+        context.setUser(JSON.parse(user))
+      }
+  })
 
   return (
     <Layout>
@@ -32,7 +43,7 @@ function App() {
 
             <Route path="/admin/tests" element={<Tests />} />
 
-            <Route path="/admin/reports" component={<Report />} />
+            <Route path="/admin/reports" element={<Reports/>} />
 
             <Route path="/student/test" element={<StudentTest />} />
           </Fragment>

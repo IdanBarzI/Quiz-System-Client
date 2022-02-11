@@ -4,11 +4,13 @@ import { SettingsContextProvider } from "./SettingsContext";
 const AppContext = React.createContext({
   user: null,
   token: null,
+  fieldOfStudy:null
 });
 
 export const AppContextProvider = (props) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
+  const [fieldOfStudy,setFieldOfStudy] = useState(null)
   return (
     <SettingsContextProvider>
       <AppContext.Provider
@@ -17,6 +19,8 @@ export const AppContextProvider = (props) => {
           setUser: setUser,
           token,
           setToken: setToken,
+          fieldOfStudy,
+          setFieldOfStudy:setFieldOfStudy
         }}
       >
         {props.children}

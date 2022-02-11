@@ -50,6 +50,8 @@ const LoginForm = (props) => {
           }
           ctx.setUser(response.data.user);
           ctx.setToken(response.data.token);
+          window.localStorage.setItem("Json-Web-Token",response.data.token)
+          window.localStorage.setItem("user",JSON.stringify(response.data.user))
           navigate("/admin/main-menu", { replace: true });
         })
         .catch(function (error) {

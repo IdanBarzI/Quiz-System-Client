@@ -1,0 +1,13 @@
+.question{
+    font-size: 1rem;
+    color: blue;
+}
+.tags{
+    display: flex;
+    justify-content: flex-start;
+}
+.tag{
+    font-size: .7rem;
+    color: blue;
+    opacity: .8;
+}
