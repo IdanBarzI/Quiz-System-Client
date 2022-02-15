@@ -5,6 +5,7 @@ import AppContext from "../../context/AppContext";
 import { Input, Icon, ToolTip } from "../Ui";
 import serverAccess from "../../api/serverAccess";
 import { UPDATE_FORM, onFocusOut } from "../../lib/loginFormUtils";
+import LoadingAnimation from "../Ui/Elements/LoadingAnimation/LoadingAnimation";
 
 const initialState = {
   email: { value: "", touched: false, hasError: false, error: "" },
@@ -109,7 +110,7 @@ const LoginForm = (props) => {
       </div>
       <div className="form-actions">
         {isLoading ? (
-          <p>Sending</p>
+          <LoadingAnimation/>
         ) : (
           <button type="submit" className="form-btn btn-login">
             LOGIN

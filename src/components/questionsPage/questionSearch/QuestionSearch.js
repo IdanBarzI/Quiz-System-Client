@@ -3,10 +3,10 @@ import classes from "./QuestionSearch.module.css"
 
 const QuestionSearch = () => {
   return (
-    <div>
+    <div className={classes.container}>
         <>Search For Questions by content or tags :</>
         <br/>
-        <input type='text'/>
+        <input className={classes.input} type='text'/>
     </div>
   )
 }

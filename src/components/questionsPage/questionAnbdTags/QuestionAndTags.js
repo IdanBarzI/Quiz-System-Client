@@ -7,13 +7,13 @@ const QuestionAndTags = ({question , tags}) => {
         return tags.map((tag,indx)=>{
             if(indx===tags.length-1)
             return(
-                <div className={classes.tag}>
+                <div key={indx} className={classes.tag}>
                     <span>{tag.title}</span>
                 </div>
             )
             else{
                 return(
-                    <div className={classes.tag}>
+                    <div key={indx} className={classes.tag}>
                         <span>{tag.title}</span>
                         <span>|</span>
                     </div>

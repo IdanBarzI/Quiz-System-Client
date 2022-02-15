@@ -33,8 +33,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
-
         <Route path="/signup" element={<SignUp />} />
+        <Route exac path="/student/test/:id" element={<StudentTest />} />
         {context.token && (
           <Fragment>
             <Route path="/admin/main-menu" element={<MainMenu />} />
@@ -45,7 +45,6 @@ function App() {
 
             <Route path="/admin/reports" element={<Reports/>} />
 
-            <Route path="/student/test" element={<StudentTest />} />
           </Fragment>
         )}
 

@@ -17,10 +17,12 @@ const Questions = () => {
       <div className={classes.question}>
         <QuestionSearch/>
         <QuestionGrid/>
-        <button>back</button>
-        <button onClick={hsndleSetNewQuestionWindowOpened}>Create New Question</button>
+        <div className={classes.buttons}>
+          <a className={classes.backButton} href="/admin/main-menu">back</a>
+          <button onClick={hsndleSetNewQuestionWindowOpened}>Create New Question</button>
+        </div>
         {newQuestionWindowOpened &&
-          <NewQuestion setClose={hsndleSetNewQuestionWindowOpened}/>
+          <NewQuestion isEdit={false} setClose={hsndleSetNewQuestionWindowOpened}/>
         }
       </div>
   )

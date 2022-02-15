@@ -61,7 +61,7 @@ const NavBar = (props) => {
               </li>
             </Fragment>
           )}
-          {appCtx.token && (
+          {(appCtx.token && appCtx.fieldOfStudy) && (
             <Fragment>
               <li>
                 <NavLink

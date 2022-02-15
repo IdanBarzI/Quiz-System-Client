@@ -1,0 +1,22 @@
+.pagination{
+    display: flex;
+    list-style: none;
+    justify-content: space-between;
+}
+.pageItem{
+    padding: .5rem;
+    margin: .3rem;
+    background-color: whitesmoke;
+    border: 1px solid black;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.pageItemSelected{
+    padding: .5rem;
+    margin: .3rem;
+    background-color: gray;
+    color: aliceblue;
+    border: 1px solid black;
+    border-radius: 3px;
+    cursor: pointer;
+}
