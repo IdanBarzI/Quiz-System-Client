@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import serverAccess from "../../../api/serverAccess";
 import StudentTestContext from "../../../context/StudentTestContext";
 
 const Closing = () => {
@@ -8,7 +9,8 @@ const Closing = () => {
 
 
   useEffect(()=>{
-    console.log(studentAnswers)
+
+    localStorage.clear()
   },[])
 
   const combineNewStudentTest=()=>{

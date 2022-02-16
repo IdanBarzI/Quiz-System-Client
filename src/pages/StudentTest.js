@@ -8,10 +8,8 @@ import testMock from '../mocks/oneTestMock.json'
 import StudentTestContext from "../context/StudentTestContext";
 import Questions from "../components/StudentTestPage/StudentTest/Questions";
 
-const StudentTest = (props) => {
+const StudentTest = () => {
   const {id} = useParams()
-  
-
 
   const [test,setTest] = useState(null)
   const [student,setStudent] = useState(null)
@@ -46,6 +44,9 @@ const StudentTest = (props) => {
     if(!getFromLocalStorage(setTest,"test")){
       setTest(testMock)
     }
+    // serverAccess.get('/tests',tokenConfig(token),{params:{id:id}})
+    //   .then((res)=>setTest(res.data))
+    //   .catch((err)=>console.log(err))
     getFromLocalStorage(setStudent,'student')
     getFromLocalStorage(setQuestionIndex,'index')
     getFromLocalStorage(setStudentAnswers,'studentAnswers')
