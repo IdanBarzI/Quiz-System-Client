@@ -1,0 +1,18 @@
+.container{
+    border: 1px solid black;
+    padding: 1rem 2rem;
+    background-color: whitesmoke;
+}
+.table{
+}
+.row{
+    cursor: pointer;
+    text-align: center;
+}
+.buttons{
+    display: flex;
+    justify-content: center;
+}
+.head{
+    background-color: aliceblue;
+}

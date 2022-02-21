@@ -1,0 +1,12 @@
+.backButton{
+    text-decoration: none;
+    color: black;
+    padding: .3rem;
+    background-color: lightgrey;
+}
+.buttons{
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem .5rem;
+    background-color: aliceblue;
+}

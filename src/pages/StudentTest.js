@@ -41,12 +41,12 @@ const StudentTest = () => {
 
   useEffect(()=>{
     //get test by id from server
-    if(!getFromLocalStorage(setTest,"test")){
-      setTest(testMock)
-    }
-    // serverAccess.get('/tests',tokenConfig(token),{params:{id:id}})
-    //   .then((res)=>setTest(res.data))
-    //   .catch((err)=>console.log(err))
+    // if(!getFromLocalStorage(setTest,"test")){
+    //   setTest(testMock)
+    // }
+    serverAccess.get(`/tests/${id}`)
+    .then((res)=>setTest(res.data))
+    .catch((err)=>console.log(err))
     getFromLocalStorage(setStudent,'student')
     getFromLocalStorage(setQuestionIndex,'index')
     getFromLocalStorage(setStudentAnswers,'studentAnswers')

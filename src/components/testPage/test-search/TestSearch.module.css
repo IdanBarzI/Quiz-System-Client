@@ -1,0 +1,8 @@
+.container{
+    display: flex;
+    padding: 2rem .5rem;
+    background-color: aliceblue;
+}
+.input{
+    margin-left: 1rem;
+}

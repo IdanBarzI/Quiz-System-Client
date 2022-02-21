@@ -1,7 +1,6 @@
 import React, { useRef, useState } from "react";
 import NewQuestion from "../components/questionsPage/newQuestion/NewQuestion";
 import QuestionGrid from "../components/questionsPage/questionGrid/QuestionGrid";
-import QuestionSearch from "../components/questionsPage/questionSearch/QuestionSearch";
 import TextEditor from "../components/Ui/Elements/textEditor/TextEditor";
 import classes from './Question.module.css'
 
@@ -15,7 +14,6 @@ const Questions = () => {
 
   return (
       <div className={classes.question}>
-        <QuestionSearch/>
         <QuestionGrid/>
         <div className={classes.buttons}>
           <a className={classes.backButton} href="/admin/main-menu">back</a>

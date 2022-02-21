@@ -12,12 +12,11 @@ const Questions = () => {
   const handleNextClick =()=>{
     if(isLastQuestion){
       setIsFinished(true)
-      setStudentAnswers(prevState=>([...prevState,{selected:selected,questionId:question._id}]))
     } 
     else{
       setQuestionIndex(questionIndex+1)
-      setStudentAnswers(prevState=>([...prevState,{selected:selected,questionId:question._id}]))
     } 
+    setStudentAnswers(prevState=>([...prevState,{selected:selected,questionId:question._id}]))
   }
 
   const handlePreviousClick=()=>{

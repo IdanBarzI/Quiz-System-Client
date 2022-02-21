@@ -4,6 +4,7 @@ import AppContext from '../../../context/AppContext'
 import sendAuthTokenHeader from '../../../api/tokenConfig'
 import classes from './QuestionGrid.module.css'
 import QUESTIONS from '../../../mocks/questionsMock.json'
+import QuestionSearch from '../questionSearch/QuestionSearch'
 import {Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Paper} from '@material-ui/core'
 import QuestionAndTags from '../questionAnbdTags/QuestionAndTags'
 import QuestionPreview from '../questionPreview/QuestionPreview'
@@ -117,6 +118,7 @@ const QuestionGrid = () => {
 
   return (
     <div className={classes.container}>
+      <QuestionSearch/>
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple-table">
           <TableHead className={classes.head}>
