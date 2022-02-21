@@ -1,5 +1,9 @@
 //layouts
-export { Rows, Columns } from "./Layouts/Grid";
+export { default as Settings } from "./Layouts/Settings";
+export { default as ProtectedRoute } from "./Layouts/ProtectedRoute";
+export { default as Layout } from "./Layouts/Layout";
+export { default as NavBar } from "./Layouts/NavBar";
+export { default as NotFound } from "./Layouts/NotFound";
 export { default as Line } from "./Layouts/Line";
 export { default as Box } from "./Layouts/Box";
 export { default as Article } from "./Layouts/Article";
@@ -15,3 +19,4 @@ export { default as Accordion } from "./Elements/Accordion";
 export { default as ToggleSwitch } from "./Elements/ToggleSwitch";
 export { default as ToolTip } from "./Elements/ToolTip";
 export { default as HoverBox } from "./Elements/HoverBox";
+export { default as LoadingSpinner } from "./Elements/LoadingSpinner";

@@ -1,4 +1,4 @@
-import NotFoundCom from "../components/layout/NotFound";
+import { NotFound as NotFoundCom } from "../components/Ui";
 const NotFound = () => {
   return (
     <>

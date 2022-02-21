@@ -30,7 +30,7 @@ const formsReducer = (state, action) => {
 
 const LoginForm = (props) => {
   const [formState, dispatch] = useReducer(formsReducer, initialState);
-  const ctx = useContext(AppContext);
+  const { setUser, setToken } = useContext(AppContext);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -49,10 +49,10 @@ const LoginForm = (props) => {
             //show error to the user
             return;
           }
-          ctx.setUser(response.data.user);
-          ctx.setToken(response.data.token);
-          window.localStorage.setItem("Json-Web-Token",response.data.token)
-          window.localStorage.setItem("user",JSON.stringify(response.data.user))
+          setUser(response.data.user);
+          setToken(response.data.token);
+          // window.localStorage.setItem("Json-Web-Token",response.data.token)
+          // window.localStorage.setItem("user",JSON.stringify(response.data.user))
           navigate("/admin/main-menu", { replace: true });
         })
         .catch(function (error) {
@@ -66,8 +66,8 @@ const LoginForm = (props) => {
 
   const formReset = (event) => {
     event.preventDefault();
-    console.log(ctx.user);
-    console.log(ctx.token);
+    // console.log(ctx.user);
+    // console.log(ctx.token);
   };
 
   return (
@@ -110,7 +110,7 @@ const LoginForm = (props) => {
       </div>
       <div className="form-actions">
         {isLoading ? (
-          <LoadingAnimation/>
+          <LoadingAnimation />
         ) : (
           <button type="submit" className="form-btn btn-login">
             LOGIN

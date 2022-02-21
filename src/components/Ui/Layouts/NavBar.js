@@ -1,24 +1,24 @@
 import React, { Fragment, useContext, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
-import { ToggleSwitch, HoverBox } from "../Ui";
-import SettingsContext from "../../context/SettingsContext";
+import { ToggleSwitch, HoverBox } from "../../Ui";
+import SettingsContext from "../../../context/SettingsContext";
 import classes from "./NavBar.module.css";
-import AppContext from "../../context/AppContext";
+import AppContext from "../../../context/AppContext";
 
 const NavBar = (props) => {
   const settingCtx = useContext(SettingsContext);
-  const appCtx = useContext(AppContext);
+  const { user, token, fieldOfStudy, setFieldOfStudy } = useContext(AppContext);
 
   const renderFields = () => {
-    return appCtx.user.organization.fields.map((field) => {
+    return user?.organization?.fields.map((field) => {
       return (
-        <option key={field._id} value={JSON.stringify(field)} >
+        <option key={field._id} value={field}>
           {field.title}
         </option>
       );
     });
   };
-  useEffect(() => {}, [appCtx]);
+  // useEffect(() => {}, [appCtx]);
   return (
     <header className={classes.header}>
       <div className={classes.logo}></div>
@@ -27,16 +27,21 @@ const NavBar = (props) => {
           <li className={classes.settings}>
             <HoverBox i="cog">
               <ToggleSwitch onChange={settingCtx.onThemeSwitch} />
-              {appCtx.user && 
+              {user && (
                 <>
                   <p>Please select field of study:</p>
-                  <select className={classes.select} name="fields" onChange={(e)=>appCtx.setFieldOfStudy(JSON.parse(e.target.value))}>{renderFields()}</select>
+                  <select
+                    className={classes.select}
+                    name="fields"
+                    onChange={(e) => setFieldOfStudy(e.target.value)}
+                  >
+                    {renderFields()}
+                  </select>
                 </>
-                
-              }
+              )}
             </HoverBox>
           </li>
-          {!appCtx.token && (
+          {!token && (
             <Fragment>
               <li>
                 <NavLink
@@ -61,7 +66,7 @@ const NavBar = (props) => {
               </li>
             </Fragment>
           )}
-          {(appCtx.token && appCtx.fieldOfStudy) && (
+          {token && fieldOfStudy && (
             <Fragment>
               <li>
                 <NavLink
