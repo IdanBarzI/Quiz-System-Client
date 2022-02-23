@@ -1,0 +1,16 @@
+.btnSave {
+  color: var(--secondery-bg-color);
+  width: 100%;
+  padding: var(--gap-s);
+  background-color: var(--primary-color);
+  border-radius: 5px;
+
+  border: none;
+  outline: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btnSave:hover {
+  background-color: var(--secondery-color);
+}

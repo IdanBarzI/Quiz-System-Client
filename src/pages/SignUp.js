@@ -5,10 +5,10 @@ import { Box } from "../components/Ui";
 
 const SignUp = (props) => {
   return (
-    <Box>
+    <div>
       <img className="logo" src={logo} width={"200rem"} />
       <SignUpForm />
-    </Box>
+    </div>
   );
 };
 

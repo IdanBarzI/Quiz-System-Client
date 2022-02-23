@@ -1,0 +1,28 @@
+.question {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+.questionType {
+  border-top: solid var(--purple-color) 1px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.answers {
+  border-top: solid var(--purple-color) 1px;
+}
+
+.tags {
+  border-top: solid var(--purple-color) 1px;
+  display: flex;
+  align-items: center;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+}

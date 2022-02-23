@@ -1,18 +1,25 @@
-
-.container{
-    border: 1px solid black;
-    padding: 1rem 2rem;
-    background-color: whitesmoke;
+.container {
+  padding: 1rem 2rem;
+  background-color: var(--oppesit-primary-color);
 }
-.table{
+.table {
+  background-color: var(--oppesit-secondery-color);
+  color: var(--primary-color);
 }
-.row{
-    cursor: pointer;
+.head {
+  background-color: var(--oppesit-secondery-color);
 }
-.buttons{
-    display: flex;
-    justify-content: center;
+.row {
+  cursor: pointer;
 }
-.head{
-    background-color: aliceblue;
+.cellContiner {
+  padding-left: 10%;
+}
+.cell {
+  color: var(--primary-color);
+}
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 }

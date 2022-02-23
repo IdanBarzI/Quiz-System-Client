@@ -1,13 +1,9 @@
-import classes from './NewTest.module.css'
-import React from 'react'
-import PopupWindow from '../../Ui/Elements/popupWindow/PopupWindow'
+import classes from "./NewTest.module.css";
+import React from "react";
+import { Modal } from "../../Ui";
 
-const NewTest = ({setClose}) => {
-  return (
-    <PopupWindow setClose={setClose}>
+const NewTest = ({ setClose }) => {
+  return <Modal onCancle={setClose}></Modal>;
+};
 
-    </PopupWindow>
-  )
-}
-
-export default NewTest
+export default NewTest;

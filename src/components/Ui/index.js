@@ -8,9 +8,10 @@ export { default as Line } from "./Layouts/Line";
 export { default as Box } from "./Layouts/Box";
 export { default as Article } from "./Layouts/Article";
 export { default as Card } from "./Layouts/Card";
+export { default as Typography } from "./Layouts/Typography/Typography";
 
 //elements
-export { default as Btn } from "./Elements/Btn";
+export { default as Button } from "./Elements/Button";
 export { default as Icon } from "./Elements/Icon";
 export { default as Input } from "./Elements/Input";
 export { default as CheckBox } from "./Elements/CheckBox";
@@ -20,3 +21,5 @@ export { default as ToggleSwitch } from "./Elements/ToggleSwitch";
 export { default as ToolTip } from "./Elements/ToolTip";
 export { default as HoverBox } from "./Elements/HoverBox";
 export { default as LoadingSpinner } from "./Elements/LoadingSpinner";
+export { default as Modal } from "./Elements/Modal/Modal";
+export { default as TextEditor } from "./Elements/TextEditor/TextEditor";

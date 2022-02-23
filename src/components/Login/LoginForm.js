@@ -51,8 +51,6 @@ const LoginForm = (props) => {
           }
           setUser(response.data.user);
           setToken(response.data.token);
-          // window.localStorage.setItem("Json-Web-Token",response.data.token)
-          // window.localStorage.setItem("user",JSON.stringify(response.data.user))
           navigate("/admin/main-menu", { replace: true });
         })
         .catch(function (error) {
@@ -66,8 +64,6 @@ const LoginForm = (props) => {
 
   const formReset = (event) => {
     event.preventDefault();
-    // console.log(ctx.user);
-    // console.log(ctx.token);
   };
 
   return (

@@ -1,22 +1,16 @@
 import React, { useState } from "react";
+import useStickyState from "../hooks/use-sticky-state";
 
 const SettingsContext = React.createContext({
   theme: true,
   onThemeSwitch: () => {},
-  field: null,
-  fieldSwitchHandler: (field) => {},
 });
 
 export const SettingsContextProvider = (props) => {
-  const [theme, setTheme] = useState(true);
-  const [field, setField] = useState(null);
+  const [theme, setTheme] = useStickyState(true, "theme");
 
   const themeSwitchHandler = () => {
     setTheme((prevCheck) => !prevCheck);
-  };
-
-  const fieldSwitchHandler = (field) => {
-    setField(field);
   };
 
   return (
@@ -24,8 +18,6 @@ export const SettingsContextProvider = (props) => {
       value={{
         theme,
         onThemeSwitch: themeSwitchHandler,
-        field,
-        onFieldSwitch: fieldSwitchHandler,
       }}
     >
       {props.children}

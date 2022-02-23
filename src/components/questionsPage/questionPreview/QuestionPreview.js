@@ -1,29 +1,35 @@
-import classes from './QuestionPreview.module.css'
-import React from 'react'
-import PopupWindow from '../../Ui/Elements/popupWindow/PopupWindow'
-import { Accordion,AccordionSummary,AccordionDetails,Typography } from '@material-ui/core'
+import classes from "./QuestionPreview.module.css";
+import React, { useEffect } from "react";
+import { Modal, Icon, Typography } from "../../Ui";
 
-const QuestionPreview = ({setClose,question}) => {
+const QuestionPreview = ({ setClose, question }) => {
+  useEffect(() => {
+    console.log(question);
+  });
+
   return (
-    <PopupWindow setClose={setClose}>
-        <label>{question.title}</label>
-        {question.answers.map((answer,index)=>{
-          return(
-            <Accordion  TransitionProps={{ unmountOnExit: true }}>
-              <AccordionSummary
-                aria-controls="panel1a-content"
-                id="panel1a-header">
-                <Typography>{index+1}</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <label>{answer.title}</label>              
-                <p>{answer.isCorrect ? "Correct" : "Incorrect"}</p>
-              </AccordionDetails>
-            </Accordion>
-          )
+    <Modal onCancle={setClose} title={question.title}>
+      <div className={classes.answers}>
+        {question.answers.map((answer, index) => {
+          return (
+            <div className={classes.answer} key={index}>
+              <div className={classes.body}>
+                <Typography>{index + 1}.</Typography>
+                <Typography>{answer.title}</Typography>
+              </div>
+              <div className={classes.isCorrect}>
+                {answer.isCorrect ? (
+                  <Icon className={classes.iconV} i="circle" />
+                ) : (
+                  <Icon className={classes.iconX} i="circle" />
+                )}
+              </div>
+            </div>
+          );
         })}
-    </PopupWindow>
-  )
-}
+      </div>
+    </Modal>
+  );
+};
 
-export default QuestionPreview
+export default QuestionPreview;

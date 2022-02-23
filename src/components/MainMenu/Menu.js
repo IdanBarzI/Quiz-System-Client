@@ -5,10 +5,6 @@ import AppContext from "../../context/AppContext";
 const Menu = () => {
   const ctx = useContext(AppContext);
 
-  useEffect(() => {
-    console.log(ctx);
-  }, []);
-
   return (
     <div>
       <div>Main Menu</div>

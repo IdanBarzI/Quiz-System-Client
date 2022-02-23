@@ -1,153 +1,185 @@
-import React, { useEffect, useState,useContext, Fragment } from 'react'
-import serverAccess from '../../../api/serverAccess'
-import AppContext from '../../../context/AppContext'
-import sendAuthTokenHeader from '../../../api/tokenConfig'
-import classes from './QuestionGrid.module.css'
-import QUESTIONS from '../../../mocks/questionsMock.json'
-import QuestionSearch from '../questionSearch/QuestionSearch'
-import {Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Paper} from '@material-ui/core'
-import QuestionAndTags from '../questionAnbdTags/QuestionAndTags'
-import QuestionPreview from '../questionPreview/QuestionPreview'
-import NewQuestion from '../newQuestion/NewQuestion'
-import Line from '../../Ui/Layouts/Line'
-import Pagination from '../../Ui/pagination/Pagination'
+import React, { useEffect, useState, useCallback, Fragment } from "react";
+import classes from "./QuestionGrid.module.css";
+// import QUESTIONS from "../../../mocks/questionsMock.json";
+import { useStore } from "../../../store/store";
+import QuestionSearch from "../questionSearch/QuestionSearch";
+import QuestionAndTags from "../questionAnbdTags/QuestionAndTags";
+import QuestionPreview from "../questionPreview/QuestionPreview";
+import NewQuestion from "../newQuestion/NewQuestion";
+import { Typography, Line, Button } from "../../Ui";
+import Pagination from "../../Ui/pagination/Pagination";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@material-ui/core";
 
-
-const PER_PAGE =5
+const PER_PAGE = 5;
 
 const QuestionGrid = () => {
-    const [questions,setQuestions] = useState(QUESTIONS)
-    const [selectedQuestion,setSelectedQuestion] = useState()
-    const [renderPreview,setRenderPreview] = useState(false)
-    const [renderEdit,setRenderEdit] = useState(false)
-    const [currentPage,setCurrentPage]=useState(1)
-    const [questionsPerPage,setQuestionsPerPage]=useState(PER_PAGE)
-    const [isAllShown,setIsAllShown]=useState(false)
+  // const [questions, setQuestions] = useState(QUESTIONS);
+  const [questions, dispatch] = useStore();
+  console.log(questions);
+  const [renderPreview, setRenderPreview] = useState(false);
+  const [renderEdit, setRenderEdit] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [questionsPerPage, setQuestionsPerPage] = useState(PER_PAGE);
+  const [isAllShown, setIsAllShown] = useState(false);
 
-    const appCtx = useContext(AppContext);
+  const indexOfLastQuestion = currentPage * questionsPerPage;
+  const indexOfFirstQuestion = indexOfLastQuestion - questionsPerPage;
+  const currentQuestions = questions.questions.slice(
+    indexOfFirstQuestion,
+    indexOfLastQuestion
+  );
 
-    // useEffect(()=>{
-    //     serverAccess.get('/qusetions',sendAuthTokenHeader(appCtx.token))
-    //         .then((res)=>{
-    //             setQuestions(res.data)
-    //         })
-    //         .catch((err)=>{
-    //             console.log(err)
-    //         })
-    // },[])
-    useEffect(()=>{
+  const paginate = (number) => {
+    setCurrentPage(number);
+  };
 
-    },[questionsPerPage])
+  const handleShowAll = () => {
+    setCurrentPage(1);
+    setQuestionsPerPage(questions.questions.length);
+    setIsAllShown(true);
+  };
+  const handleHide = () => {
+    setQuestionsPerPage(PER_PAGE);
+    setIsAllShown(false);
+  };
 
+  const handleSetRenderPreview = () => {
+    setRenderPreview((preState) => !preState);
+  };
+  const handleSetRenderEdit = () => {
+    setRenderEdit(!renderEdit);
+  };
 
-    const indexOfLastQuestion = currentPage*questionsPerPage;
-    const indexOfFirstQuestion = indexOfLastQuestion-questionsPerPage;
-    const currentQuestions = questions.slice(indexOfFirstQuestion,indexOfLastQuestion); 
+  const getNumberOfTests = (questionId) => {
+    //api call to get number of tests the current question's id appeares on
+  };
+  const handleOpenPreviewClick = (question) => {
+    handleSetRenderPreview();
+    dispatch("TOGGLE_SELECTED", question._id);
+    // setSelectedQuestion(question);
+  };
 
+  const handleOpenEdit = (question) => {
+    handleSetRenderEdit();
+    dispatch("TOGGLE_SELECTED", question._id);
+    // setSelectedQuestion(question);
+  };
 
-    const paginate =(number)=>{
-      setCurrentPage(number)
-    }
-
-    const handleShowAll=()=>{
-      setCurrentPage(1)
-      setQuestionsPerPage(questions.length)
-      setIsAllShown(true)
-    }
-    const handleHide=()=>{
-      setQuestionsPerPage(PER_PAGE)
-      setIsAllShown(false)
-    }
-
-    const handleSetRenderPreview=()=>{
-      setRenderPreview(!renderPreview)
-    }
-    const handleSetRenderEdit=()=>{
-      setRenderEdit(!renderEdit)
-    }
-
-    const getNumberOfTests=(questionId)=>{
-       //api call to get number of tests the current question's id appeares on
-      
-    }
-    const handleOpenPreviewClick=(question)=>{
-        handleSetRenderPreview()
-        setSelectedQuestion(question)
-    }
-
-    const handleOpenEdit=(question)=>{
-        handleSetRenderEdit()
-        setSelectedQuestion(question)
-    }
-
-    const renderTableBody =()=>{
-      return currentQuestions.map((quest,indx)=>{
-        return(
-          <Fragment key={quest._id}>
-            <TableRow key={quest._id} className={classes.row} >
-              <TableCell>{quest._id}</TableCell>
-              <TableCell>
-                <QuestionAndTags question={quest.title} tags={quest.tags}/>
-              </TableCell>
-              <TableCell>{quest.updatedAt}</TableCell>
-              <TableCell>
+  const renderTableBody = () => {
+    return currentQuestions.map((quest, indx) => {
+      return (
+        <Fragment key={quest._id}>
+          <TableRow className={classes.row} key={quest._id}>
+            <TableCell>
+              <Typography className={classes.cell}>{quest._id}</Typography>
+            </TableCell>
+            <TableCell>
+              <Typography className={classes.cell}>
+                <QuestionAndTags question={quest.title} tags={quest.tags} />
+              </Typography>
+            </TableCell>
+            <TableCell>
+              <Typography className={classes.cell}>
+                {quest.updatedAt}
+              </Typography>
+            </TableCell>
+            <TableCell>
+              <Typography className={classes.cell}>
                 {quest.isMultipleAnswers ? "Multiple" : "Single"}
-              </TableCell>
-              <TableCell>
+              </Typography>
+            </TableCell>
+            <TableCell>
+              <Typography className={classes.cell}>
                 {getNumberOfTests(quest._id)}
-              </TableCell>
-              <TableCell>
+              </Typography>
+            </TableCell>
+            <TableCell>
+              <Typography className={classes.cell}>
                 <div className={classes.buttons}>
-                    <button onClick={()=>handleOpenPreviewClick(quest)}>Show</button>
-                    <button onClick={()=>handleOpenEdit(quest)}>Edit</button>
-                    <button>Delete</button>
+                  <Button onClick={() => handleOpenPreviewClick(quest)}>
+                    Show
+                  </Button>
+                  <Button onClick={() => handleOpenEdit(quest)}>Edit</Button>
+                  <Button>Delete</Button>
                 </div>
-              </TableCell>
-            </TableRow>
-            {(selectedQuestion&&renderPreview)&& 
-                <QuestionPreview setClose={handleSetRenderPreview} question={selectedQuestion}/>          
-            }
-            {(selectedQuestion&&renderEdit)&& 
-                <NewQuestion isEdit={true} setClose={handleSetRenderEdit} question={selectedQuestion}/>          
-            }
-          </Fragment>
-        )
-      })
-    }
-
+              </Typography>
+            </TableCell>
+          </TableRow>
+          {questions.selectedQuestion &&
+            renderPreview &&
+            questions.selectedQuestion._id === quest._id && (
+              <QuestionPreview
+                setClose={handleSetRenderPreview}
+                question={questions.selectedQuestion}
+              />
+            )}
+          {questions.selectedQuestion &&
+            renderEdit &&
+            questions.selectedQuestion._id === quest._id && (
+              <NewQuestion
+                isEdit={true}
+                setClose={handleSetRenderEdit}
+                question={questions.selectedQuestion}
+              />
+            )}
+        </Fragment>
+      );
+    });
+  };
 
   return (
     <div className={classes.container}>
-      <QuestionSearch/>
-      <TableContainer component={Paper}>
+      <QuestionSearch />
+      <TableContainer>
         <Table className={classes.table} aria-label="simple-table">
           <TableHead className={classes.head}>
-            <TableRow>
-              <TableCell>Id</TableCell>
-              <TableCell>Question text and tags</TableCell>
-              <TableCell>Last Update</TableCell>
-              <TableCell>Question Type</TableCell>
-              <TableCell># of Tests</TableCell>
-              <TableCell>Options</TableCell>
+            <TableRow className={classes.row}>
+              <TableCell>
+                <Typography className={classes.cell}>Id</Typography>
+              </TableCell>
+              <TableCell>
+                <Typography className={classes.cell}>
+                  Question text and tags
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography className={classes.cell}>Last Update</Typography>
+              </TableCell>
+              <TableCell>
+                <Typography className={classes.cell}>Question Type</Typography>
+              </TableCell>
+              <TableCell>
+                <Typography className={classes.cell}># of Tests</Typography>
+              </TableCell>
+              <TableCell className={classes.cellContiner}>
+                <Typography className={classes.cell}>Options</Typography>
+              </TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
-            {renderTableBody()}
-          </TableBody>
+          <TableBody>{renderTableBody()}</TableBody>
         </Table>
       </TableContainer>
       <Line justify="between">
-        <Pagination itemsPerPage={questionsPerPage} currentPage={currentPage} paginate={paginate} totalItems={questions.length} />
-        {!isAllShown &&
-            <button onClick={handleShowAll}>Show All</button>
-        }
-        {isAllShown &&
-            <button onClick={handleHide}>Hide</button>
-        }
+        <Pagination
+          itemsPerPage={questionsPerPage}
+          currentPage={currentPage}
+          paginate={paginate}
+          totalItems={questions.questions.length}
+        />
+        <div>
+          {!isAllShown && <Button onClick={handleShowAll}>Show All</Button>}
+          {isAllShown && <Button onClick={handleHide}>Hide</Button>}
+        </div>
       </Line>
     </div>
-  )
+  );
+};
 
-}
-
-export default QuestionGrid
+export default QuestionGrid;

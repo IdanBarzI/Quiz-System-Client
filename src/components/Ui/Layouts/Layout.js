@@ -8,7 +8,7 @@ const Layout = (props) => {
   const ctx = useContext(SettingsContext);
   return (
     <div className={classes.app} data-theme={`${ctx.theme ? "light" : "dark"}`}>
-      <NavBar />
+      {!window.location.href.includes("student/test") && <NavBar />}
       <main className={classes.main}>{props.children}</main>
     </div>
   );

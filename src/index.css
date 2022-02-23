@@ -1,5 +1,8 @@
 :root {
   --secondery-bg-color: #264eca;
+  --purple-color: #4f005f;
+  --error-color: rgb(233, 0, 0);
+  --succes-color: rgb(25, 105, 4);
 
   --defult-text-size: 1rem;
 

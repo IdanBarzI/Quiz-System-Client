@@ -12,7 +12,7 @@ const NavBar = (props) => {
   const renderFields = () => {
     return user?.organization?.fields.map((field) => {
       return (
-        <option key={field._id} value={field}>
+        <option key={field._id} value={field.title}>
           {field.title}
         </option>
       );

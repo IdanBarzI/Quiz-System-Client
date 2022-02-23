@@ -1,0 +1,809 @@
+import { initStore } from "./store";
+
+const configureStore = () => {
+  const actions = {
+    TOGGLE_SELECTED: (curState, questionId) => {
+      const quesIndex = curState.questions.findIndex(
+        (q) => q._id === questionId
+      );
+      // console.log(curState.questions[quesIndex]);
+      curState.selectedQuestion = curState.questions[quesIndex];
+      return { selectedQuestion: { ...curState.questions[quesIndex] } };
+    },
+  };
+  initStore(actions, {
+    questions: [
+      {
+        _id: "1",
+        title: "Asp.net CORE used for :",
+        isMultipleAnswers: false,
+        field: {
+          _id: "6203c0c26a720368e6658b73",
+          title: "Server Side",
+          __v: 0,
+        },
+        tags: [
+          {
+            _id: "6203cbbfe539c19bf397d8f2",
+            title: "C#",
+            __v: 0,
+          },
+          {
+            _id: "6203cbcde539c19bf397d8f4",
+            title: "Asp.NET Core",
+            __v: 0,
+          },
+        ],
+        organization: {
+          _id: "6203c1046a720368e6658b77",
+          name: "Microsoft",
+          fields: [
+            "6203c0ba6a720368e6658b71",
+            "6203c0c26a720368e6658b73",
+            "6203c0cd6a720368e6658b75",
+          ],
+          __v: 0,
+        },
+        answers: [
+          {
+            _id: "6203cc1ae539c19bf397d8f6",
+            title: "Building web application",
+            isCorrect: true,
+            __v: 0,
+          },
+          {
+            _id: "6203cc37e539c19bf397d8f8",
+            title: "Building desktop application",
+            isCorrect: false,
+            __v: 0,
+          },
+          {
+            _id: "6203cc6ce539c19bf397d8fa",
+            title: "Testing React application",
+            isCorrect: false,
+            __v: 0,
+          },
+          {
+            _id: "6203cc9fe539c19bf397d8fc",
+            title: "Increase Computer Performance",
+            isCorrect: false,
+            __v: 0,
+          },
+        ],
+        updatedAt: "10/10/2021",
+        __v: 0,
+      },
+      {
+        _id: "2",
+        title: "What is Dependancy Injection",
+        isMultipleAnswers: true,
+        field: {
+          _id: "6203c0c26a720368e6658b73",
+          title: "Server Side",
+          __v: 0,
+        },
+        tags: [
+          {
+            _id: "6203cbbfe539c19bf397d8f2",
+            title: "C#",
+            __v: 0,
+          },
+          {
+            _id: "6203cbcde539c19bf397d8f4",
+            title: "Asp.NET Core",
+            __v: 0,
+          },
+        ],
+        organization: {
+          _id: "6203c1046a720368e6658b77",
+          name: "Microsoft",
+          fields: [
+            "6203c0ba6a720368e6658b71",
+            "6203c0c26a720368e6658b73",
+            "6203c0cd6a720368e6658b75",
+          ],
+          __v: 0,
+        },
+        answers: [
+          {
+            _id: "6203cc1ae538c19bf397d8f6",
+            title: "Solid principle",
+            __v: 0,
+          },
+          {
+            _id: "6203cc37e539c19af397d8f8",
+            title: "a",
+            __v: 0,
+          },
+          {
+            _id: "6203cc6ce539c19bf397d8fa",
+            title: "n",
+            __v: 0,
+          },
+          {
+            _id: "6203cc9fe539c19bf397d8fc",
+            title: "5e",
+            __v: 0,
+          },
+        ],
+        updatedAt: "10/10/2021",
+        __v: 0,
+      },
+      {
+        _id: "3",
+        title: "Asp.net CORE used for :",
+        isMultipleAnswers: false,
+        field: {
+          _id: "6203c0c26a720368e6658b73",
+          title: "Server Side",
+          __v: 0,
+        },
+        tags: [
+          {
+            _id: "6203cbbfe539c19bf397d8f2",
+            title: "C#",
+            __v: 0,
+          },
+          {
+            _id: "6203cbcde539c19bf397d8f4",
+            title: "Asp.NET Core",
+            __v: 0,
+          },
+        ],
+        organization: {
+          _id: "6203c1046a720368e6658b77",
+          name: "Microsoft",
+          fields: [
+            "6203c0ba6a720368e6658b71",
+            "6203c0c26a720368e6658b73",
+            "6203c0cd6a720368e6658b75",
+          ],
+          __v: 0,
+        },
+        answers: [
+          {
+            _id: "6203cc1ae539c19bf397d8f6",
+            title: "Building web application",
+            __v: 0,
+          },
+          {
+            _id: "6203cc37e539c19bf397d8f8",
+            title: "Building desktop application",
+            __v: 0,
+          },
+          {
+            _id: "6203cc6ce539c19bf397d8fa",
+            title: "Testing React application",
+            __v: 0,
+          },
+          {
+            _id: "6203cc9fe539c19bf397d8fc",
+            title: "Increase Computer Performance",
+            __v: 0,
+          },
+        ],
+        updatedAt: "10/10/2021",
+        __v: 0,
+      },
+      {
+        _id: "4",
+        title: "Asp.net CORE used for :",
+        isMultipleAnswers: false,
+        field: {
+          _id: "6203c0c26a720368e6658b73",
+          title: "Server Side",
+          __v: 0,
+        },
+        tags: [
+          {
+            _id: "6203cbbfe539c19bf397d8f2",
+            title: "C#",
+            __v: 0,
+          },
+          {
+            _id: "6203cbcde539c19bf397d8f4",
+            title: "Asp.NET Core",
+            __v: 0,
+          },
+        ],
+        organization: {
+          _id: "6203c1046a720368e6658b77",
+          name: "Microsoft",
+          fields: [
+            "6203c0ba6a720368e6658b71",
+            "6203c0c26a720368e6658b73",
+            "6203c0cd6a720368e6658b75",
+          ],
+          __v: 0,
+        },
+        answers: [
+          {
+            _id: "6203cc1ae539c19bf397d8f6",
+            title: "Building web application",
+            __v: 0,
+          },
+          {
+            _id: "6203cc37e539c19bf397d8f8",
+            title: "Building desktop application",
+            __v: 0,
+          },
+          {
+            _id: "6203cc6ce539c19bf397d8fa",
+            title: "Testing React application",
+            __v: 0,
+          },
+          {
+            _id: "6203cc9fe539c19bf397d8fc",
+            title: "Increase Computer Performance",
+            __v: 0,
+          },
+        ],
+        updatedAt: "10/10/2021",
+        __v: 0,
+      },
+      {
+        _id: "5",
+        title: "Asp.net CORE used for :",
+        isMultipleAnswers: false,
+        field: {
+          _id: "6203c0c26a720368e6658b73",
+          title: "Server Side",
+          __v: 0,
+        },
+        tags: [
+          {
+            _id: "6203cbbfe539c19bf397d8f2",
+            title: "C#",
+            __v: 0,
+          },
+          {
+            _id: "6203cbcde539c19bf397d8f4",
+            title: "Asp.NET Core",
+            __v: 0,
+          },
+        ],
+        organization: {
+          _id: "6203c1046a720368e6658b77",
+          name: "Microsoft",
+          fields: [
+            "6203c0ba6a720368e6658b71",
+            "6203c0c26a720368e6658b73",
+            "6203c0cd6a720368e6658b75",
+          ],
+          __v: 0,
+        },
+        answers: [
+          {
+            _id: "6203cc1ae539c19bf397d8f6",
+            title: "Building web application",
+            __v: 0,
+          },
+          {
+            _id: "6203cc37e539c19bf397d8f8",
+            title: "Building desktop application",
+            __v: 0,
+          },
+          {
+            _id: "6203cc6ce539c19bf397d8fa",
+            title: "Testing React application",
+            __v: 0,
+          },
+          {
+            _id: "6203cc9fe539c19bf397d8fc",
+            title: "Increase Computer Performance",
+            __v: 0,
+          },
+        ],
+        updatedAt: "10/10/2021",
+        __v: 0,
+      },
+      {
+        _id: "6",
+        title: "Asp.net CORE used for :",
+        isMultipleAnswers: false,
+        field: {
+          _id: "6203c0c26a720368e6658b73",
+          title: "Server Side",
+          __v: 0,
+        },
+        tags: [
+          {
+            _id: "6203cbbfe539c19bf397d8f2",
+            title: "C#",
+            __v: 0,
+          },
+          {
+            _id: "6203cbcde539c19bf397d8f4",
+            title: "Asp.NET Core",
+            __v: 0,
+          },
+        ],
+        organization: {
+          _id: "6203c1046a720368e6658b77",
+          name: "Microsoft",
+          fields: [
+            "6203c0ba6a720368e6658b71",
+            "6203c0c26a720368e6658b73",
+            "6203c0cd6a720368e6658b75",
+          ],
+          __v: 0,
+        },
+        answers: [
+          {
+            _id: "6203cc1ae539c19bf397d8f6",
+            title: "Building web application",
+            __v: 0,
+          },
+          {
+            _id: "6203cc37e539c19bf397d8f8",
+            title: "Building desktop application",
+            __v: 0,
+          },
+          {
+            _id: "6203cc6ce539c19bf397d8fa",
+            title: "Testing React application",
+            __v: 0,
+          },
+          {
+            _id: "6203cc9fe539c19bf397d8fc",
+            title: "Increase Computer Performance",
+            __v: 0,
+          },
+        ],
+        updatedAt: "10/10/2021",
+        __v: 0,
+      },
+      {
+        _id: "7",
+        title: "Asp.net CORE used for :",
+        isMultipleAnswers: false,
+        field: {
+          _id: "6203c0c26a720368e6658b73",
+          title: "Server Side",
+          __v: 0,
+        },
+        tags: [
+          {
+            _id: "6203cbbfe539c19bf397d8f2",
+            title: "C#",
+            __v: 0,
+          },
+          {
+            _id: "6203cbcde539c19bf397d8f4",
+            title: "Asp.NET Core",
+            __v: 0,
+          },
+        ],
+        organization: {
+          _id: "6203c1046a720368e6658b77",
+          name: "Microsoft",
+          fields: [
+            "6203c0ba6a720368e6658b71",
+            "6203c0c26a720368e6658b73",
+            "6203c0cd6a720368e6658b75",
+          ],
+          __v: 0,
+        },
+        answers: [
+          {
+            _id: "6203cc1ae539c19bf397d8f6",
+            title: "Building web application",
+            __v: 0,
+          },
+          {
+            _id: "6203cc37e539c19bf397d8f8",
+            title: "Building desktop application",
+            __v: 0,
+          },
+          {
+            _id: "6203cc6ce539c19bf397d8fa",
+            title: "Testing React application",
+            __v: 0,
+          },
+          {
+            _id: "6203cc9fe539c19bf397d8fc",
+            title: "Increase Computer Performance",
+            __v: 0,
+          },
+        ],
+        updatedAt: "10/10/2021",
+        __v: 0,
+      },
+      {
+        _id: "8",
+        title: "Asp.net CORE used for :",
+        isMultipleAnswers: false,
+        field: {
+          _id: "6203c0c26a720368e6658b73",
+          title: "Server Side",
+          __v: 0,
+        },
+        tags: [
+          {
+            _id: "6203cbbfe539c19bf397d8f2",
+            title: "C#",
+            __v: 0,
+          },
+          {
+            _id: "6203cbcde539c19bf397d8f4",
+            title: "Asp.NET Core",
+            __v: 0,
+          },
+        ],
+        organization: {
+          _id: "6203c1046a720368e6658b77",
+          name: "Microsoft",
+          fields: [
+            "6203c0ba6a720368e6658b71",
+            "6203c0c26a720368e6658b73",
+            "6203c0cd6a720368e6658b75",
+          ],
+          __v: 0,
+        },
+        answers: [
+          {
+            _id: "6203cc1ae539c19bf397d8f6",
+            title: "Building web application",
+            __v: 0,
+          },
+          {
+            _id: "6203cc37e539c19bf397d8f8",
+            title: "Building desktop application",
+            __v: 0,
+          },
+          {
+            _id: "6203cc6ce539c19bf397d8fa",
+            title: "Testing React application",
+            __v: 0,
+          },
+          {
+            _id: "6203cc9fe539c19bf397d8fc",
+            title: "Increase Computer Performance",
+            __v: 0,
+          },
+        ],
+        updatedAt: "10/10/2021",
+        __v: 0,
+      },
+      {
+        _id: "9",
+        title: "Asp.net CORE used for :",
+        isMultipleAnswers: false,
+        field: {
+          _id: "6203c0c26a720368e6658b73",
+          title: "Server Side",
+          __v: 0,
+        },
+        tags: [
+          {
+            _id: "6203cbbfe539c19bf397d8f2",
+            title: "C#",
+            __v: 0,
+          },
+          {
+            _id: "6203cbcde539c19bf397d8f4",
+            title: "Asp.NET Core",
+            __v: 0,
+          },
+        ],
+        organization: {
+          _id: "6203c1046a720368e6658b77",
+          name: "Microsoft",
+          fields: [
+            "6203c0ba6a720368e6658b71",
+            "6203c0c26a720368e6658b73",
+            "6203c0cd6a720368e6658b75",
+          ],
+          __v: 0,
+        },
+        answers: [
+          {
+            _id: "6203cc1ae539c19bf397d8f6",
+            title: "Building web application",
+            __v: 0,
+          },
+          {
+            _id: "6203cc37e539c19bf397d8f8",
+            title: "Building desktop application",
+            __v: 0,
+          },
+          {
+            _id: "6203cc6ce539c19bf397d8fa",
+            title: "Testing React application",
+            __v: 0,
+          },
+          {
+            _id: "6203cc9fe539c19bf397d8fc",
+            title: "Increase Computer Performance",
+            __v: 0,
+          },
+        ],
+        updatedAt: "10/10/2021",
+        __v: 0,
+      },
+      {
+        _id: "10",
+        title: "Asp.net CORE used for :",
+        isMultipleAnswers: false,
+        field: {
+          _id: "6203c0c26a720368e6658b73",
+          title: "Server Side",
+          __v: 0,
+        },
+        tags: [
+          {
+            _id: "6203cbbfe539c19bf397d8f2",
+            title: "C#",
+            __v: 0,
+          },
+          {
+            _id: "6203cbcde539c19bf397d8f4",
+            title: "Asp.NET Core",
+            __v: 0,
+          },
+        ],
+        organization: {
+          _id: "6203c1046a720368e6658b77",
+          name: "Microsoft",
+          fields: [
+            "6203c0ba6a720368e6658b71",
+            "6203c0c26a720368e6658b73",
+            "6203c0cd6a720368e6658b75",
+          ],
+          __v: 0,
+        },
+        answers: [
+          {
+            _id: "6203cc1ae539c19bf397d8f6",
+            title: "Building web application",
+            __v: 0,
+          },
+          {
+            _id: "6203cc37e539c19bf397d8f8",
+            title: "Building desktop application",
+            __v: 0,
+          },
+          {
+            _id: "6203cc6ce539c19bf397d8fa",
+            title: "Testing React application",
+            __v: 0,
+          },
+          {
+            _id: "6203cc9fe539c19bf397d8fc",
+            title: "Increase Computer Performance",
+            __v: 0,
+          },
+        ],
+        updatedAt: "10/10/2021",
+        __v: 0,
+      },
+      {
+        _id: "11",
+        title: "Asp.net CORE used for :",
+        isMultipleAnswers: false,
+        field: {
+          _id: "6203c0c26a720368e6658b73",
+          title: "Server Side",
+          __v: 0,
+        },
+        tags: [
+          {
+            _id: "6203cbbfe539c19bf397d8f2",
+            title: "C#",
+            __v: 0,
+          },
+          {
+            _id: "6203cbcde539c19bf397d8f4",
+            title: "Asp.NET Core",
+            __v: 0,
+          },
+        ],
+        organization: {
+          _id: "6203c1046a720368e6658b77",
+          name: "Microsoft",
+          fields: [
+            "6203c0ba6a720368e6658b71",
+            "6203c0c26a720368e6658b73",
+            "6203c0cd6a720368e6658b75",
+          ],
+          __v: 0,
+        },
+        answers: [
+          {
+            _id: "6203cc1ae539c19bf397d8f6",
+            title: "Building web application",
+            __v: 0,
+          },
+          {
+            _id: "6203cc37e539c19bf397d8f8",
+            title: "Building desktop application",
+            __v: 0,
+          },
+          {
+            _id: "6203cc6ce539c19bf397d8fa",
+            title: "Testing React application",
+            __v: 0,
+          },
+          {
+            _id: "6203cc9fe539c19bf397d8fc",
+            title: "Increase Computer Performance",
+            __v: 0,
+          },
+        ],
+        updatedAt: "10/10/2021",
+        __v: 0,
+      },
+      {
+        _id: "12",
+        title: "Asp.net CORE used for :",
+        isMultipleAnswers: false,
+        field: {
+          _id: "6203c0c26a720368e6658b73",
+          title: "Server Side",
+          __v: 0,
+        },
+        tags: [
+          {
+            _id: "6203cbbfe539c19bf397d8f2",
+            title: "C#",
+            __v: 0,
+          },
+          {
+            _id: "6203cbcde539c19bf397d8f4",
+            title: "Asp.NET Core",
+            __v: 0,
+          },
+        ],
+        organization: {
+          _id: "6203c1046a720368e6658b77",
+          name: "Microsoft",
+          fields: [
+            "6203c0ba6a720368e6658b71",
+            "6203c0c26a720368e6658b73",
+            "6203c0cd6a720368e6658b75",
+          ],
+          __v: 0,
+        },
+        answers: [
+          {
+            _id: "6203cc1ae539c19bf397d8f6",
+            title: "Building web application",
+            __v: 0,
+          },
+          {
+            _id: "6203cc37e539c19bf397d8f8",
+            title: "Building desktop application",
+            __v: 0,
+          },
+          {
+            _id: "6203cc6ce539c19bf397d8fa",
+            title: "Testing React application",
+            __v: 0,
+          },
+          {
+            _id: "6203cc9fe539c19bf397d8fc",
+            title: "Increase Computer Performance",
+            __v: 0,
+          },
+        ],
+        updatedAt: "10/10/2021",
+        __v: 0,
+      },
+      {
+        _id: "13",
+        title: "Asp.net CORE used for :",
+        isMultipleAnswers: false,
+        field: {
+          _id: "6203c0c26a720368e6658b73",
+          title: "Server Side",
+          __v: 0,
+        },
+        tags: [
+          {
+            _id: "6203cbbfe539c19bf397d8f2",
+            title: "C#",
+            __v: 0,
+          },
+          {
+            _id: "6203cbcde539c19bf397d8f4",
+            title: "Asp.NET Core",
+            __v: 0,
+          },
+        ],
+        organization: {
+          _id: "6203c1046a720368e6658b77",
+          name: "Microsoft",
+          fields: [
+            "6203c0ba6a720368e6658b71",
+            "6203c0c26a720368e6658b73",
+            "6203c0cd6a720368e6658b75",
+          ],
+          __v: 0,
+        },
+        answers: [
+          {
+            _id: "6203cc1ae539c19bf397d8f6",
+            title: "Building web application",
+            __v: 0,
+          },
+          {
+            _id: "6203cc37e539c19bf397d8f8",
+            title: "Building desktop application",
+            __v: 0,
+          },
+          {
+            _id: "6203cc6ce539c19bf397d8fa",
+            title: "Testing React application",
+            __v: 0,
+          },
+          {
+            _id: "6203cc9fe539c19bf397d8fc",
+            title: "Increase Computer Performance",
+            __v: 0,
+          },
+        ],
+        updatedAt: "10/10/2021",
+        __v: 0,
+      },
+      {
+        _id: "14",
+        title: "Asp.net CORE used for :",
+        isMultipleAnswers: false,
+        field: {
+          _id: "6203c0c26a720368e6658b73",
+          title: "Server Side",
+          __v: 0,
+        },
+        tags: [
+          {
+            _id: "6203cbbfe539c19bf397d8f2",
+            title: "C#",
+            __v: 0,
+          },
+          {
+            _id: "6203cbcde539c19bf397d8f4",
+            title: "Asp.NET Core",
+            __v: 0,
+          },
+        ],
+        organization: {
+          _id: "6203c1046a720368e6658b77",
+          name: "Microsoft",
+          fields: [
+            "6203c0ba6a720368e6658b71",
+            "6203c0c26a720368e6658b73",
+            "6203c0cd6a720368e6658b75",
+          ],
+          __v: 0,
+        },
+        answers: [
+          {
+            _id: "6203cc1ae539c19bf397d8f6",
+            title: "Building web application",
+            __v: 0,
+          },
+          {
+            _id: "6203cc37e539c19bf397d8f8",
+            title: "Building desktop application",
+            __v: 0,
+          },
+          {
+            _id: "6203cc6ce539c19bf397d8fa",
+            title: "Testing React application",
+            __v: 0,
+          },
+          {
+            _id: "6203cc9fe539c19bf397d8fc",
+            title: "Increase Computer Performance",
+            __v: 0,
+          },
+        ],
+        updatedAt: "10/10/2021",
+        __v: 0,
+      },
+    ],
+    selectedQuestion: {},
+  });
+};
+
+export default configureStore;

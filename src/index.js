@@ -4,14 +4,14 @@ import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import App from "./App";
 import { AppContextProvider } from "./context/AppContext";
-import { StudentTestContextProvider } from "./context/StudentTestContext";
+import configureStore from "./store/questions-store";
+
+configureStore();
 
 ReactDOM.render(
   <BrowserRouter>
     <AppContextProvider>
-      <StudentTestContextProvider>
-        <App />
-      </StudentTestContextProvider>
+      <App />
     </AppContextProvider>
   </BrowserRouter>,
   document.getElementById("root")
