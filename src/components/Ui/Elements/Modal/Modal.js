@@ -8,11 +8,17 @@ const Backdrop = (props) => {
 
 const ModalOverlay = (props) => {
   return (
-    <div className={classes.modal}>
-      <header className={classes.header}>
-        <h2>{props.title}</h2>
-      </header>
-      {props.children}
+    <div className={props.scroll ? classes.scrollableModal : classes.modal}>
+      <div className={classes.modalDialog}>
+        <header className={classes.header}>
+          <h2>{props.title}</h2>
+        </header>
+        <div
+          className={props.scroll ? classes.scrollableContent : classes.content}
+        >
+          {props.children}
+        </div>
+      </div>
     </div>
   );
 };
@@ -27,6 +33,7 @@ const Modal = (props) => {
       {ReactDOM.createPortal(
         <ModalOverlay
           children={props.children}
+          scroll={props.scroll}
           title={props.title}
           message={props.message}
           onConfirm={props.onConfirm}

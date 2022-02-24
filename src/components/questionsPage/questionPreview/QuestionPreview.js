@@ -1,16 +1,20 @@
 import classes from "./QuestionPreview.module.css";
 import React, { useEffect } from "react";
 import { Modal, Icon, Typography } from "../../Ui";
+import { useStore } from "../../../store/store";
 
-const QuestionPreview = ({ setClose, question }) => {
-  useEffect(() => {
-    console.log(question);
-  });
+const QuestionPreview = (props) => {
+  const [{ selectedQuestion, questionPage }, dispatch] = useStore();
+  // console.log(selectedQuestion, questionPage);
 
   return (
-    <Modal onCancle={setClose} title={question.title}>
+    <Modal
+      onCancle={() => dispatch("TOGGLE_MODAL_PREVIEW")}
+      title={selectedQuestion.title}
+      scroll={false}
+    >
       <div className={classes.answers}>
-        {question.answers.map((answer, index) => {
+        {selectedQuestion.answers.map((answer, index) => {
           return (
             <div className={classes.answer} key={index}>
               <div className={classes.body}>

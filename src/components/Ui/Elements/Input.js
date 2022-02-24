@@ -12,6 +12,7 @@ const Input = (props) => {
         <div className="form">
           <input
             required
+            defaultValue={props.defaultValue}
             value={props.value}
             name={props.name}
             onChange={props.onChange}

@@ -6,8 +6,7 @@ import QuestionSearch from "../questionSearch/QuestionSearch";
 import QuestionAndTags from "../questionAnbdTags/QuestionAndTags";
 import QuestionPreview from "../questionPreview/QuestionPreview";
 import NewQuestion from "../newQuestion/NewQuestion";
-import { Typography, Line, Button } from "../../Ui";
-import Pagination from "../../Ui/pagination/Pagination";
+import { Typography, Line, Button, Pagination } from "../../Ui";
 import {
   Table,
   TableBody,
@@ -19,19 +18,15 @@ import {
 
 const PER_PAGE = 5;
 
-const QuestionGrid = () => {
-  // const [questions, setQuestions] = useState(QUESTIONS);
-  const [questions, dispatch] = useStore();
-  console.log(questions);
-  const [renderPreview, setRenderPreview] = useState(false);
-  const [renderEdit, setRenderEdit] = useState(false);
+const QuestionGrid = (props) => {
+  const [{ questions, selectedQuestion, questionPage }, dispatch] = useStore();
   const [currentPage, setCurrentPage] = useState(1);
   const [questionsPerPage, setQuestionsPerPage] = useState(PER_PAGE);
   const [isAllShown, setIsAllShown] = useState(false);
 
   const indexOfLastQuestion = currentPage * questionsPerPage;
   const indexOfFirstQuestion = indexOfLastQuestion - questionsPerPage;
-  const currentQuestions = questions.questions.slice(
+  const currentQuestions = questions.slice(
     indexOfFirstQuestion,
     indexOfLastQuestion
   );
@@ -42,7 +37,7 @@ const QuestionGrid = () => {
 
   const handleShowAll = () => {
     setCurrentPage(1);
-    setQuestionsPerPage(questions.questions.length);
+    setQuestionsPerPage(questions.length);
     setIsAllShown(true);
   };
   const handleHide = () => {
@@ -50,26 +45,18 @@ const QuestionGrid = () => {
     setIsAllShown(false);
   };
 
-  const handleSetRenderPreview = () => {
-    setRenderPreview((preState) => !preState);
-  };
-  const handleSetRenderEdit = () => {
-    setRenderEdit(!renderEdit);
-  };
-
   const getNumberOfTests = (questionId) => {
     //api call to get number of tests the current question's id appeares on
   };
+
   const handleOpenPreviewClick = (question) => {
-    handleSetRenderPreview();
     dispatch("TOGGLE_SELECTED", question._id);
-    // setSelectedQuestion(question);
+    dispatch("TOGGLE_MODAL_PREVIEW");
   };
 
   const handleOpenEdit = (question) => {
-    handleSetRenderEdit();
     dispatch("TOGGLE_SELECTED", question._id);
-    // setSelectedQuestion(question);
+    dispatch("TOGGLE_MODAL_EDIT");
   };
 
   const renderTableBody = () => {
@@ -112,23 +99,12 @@ const QuestionGrid = () => {
               </Typography>
             </TableCell>
           </TableRow>
-          {questions.selectedQuestion &&
-            renderPreview &&
-            questions.selectedQuestion._id === quest._id && (
-              <QuestionPreview
-                setClose={handleSetRenderPreview}
-                question={questions.selectedQuestion}
-              />
-            )}
-          {questions.selectedQuestion &&
-            renderEdit &&
-            questions.selectedQuestion._id === quest._id && (
-              <NewQuestion
-                isEdit={true}
-                setClose={handleSetRenderEdit}
-                question={questions.selectedQuestion}
-              />
-            )}
+          {selectedQuestion &&
+            questionPage.modalPreviewOpen &&
+            selectedQuestion._id === quest._id && <QuestionPreview />}
+          {selectedQuestion &&
+            questionPage.modalEditOpen &&
+            selectedQuestion._id === quest._id && <NewQuestion />}
         </Fragment>
       );
     });
@@ -171,7 +147,7 @@ const QuestionGrid = () => {
           itemsPerPage={questionsPerPage}
           currentPage={currentPage}
           paginate={paginate}
-          totalItems={questions.questions.length}
+          totalItems={questions.length}
         />
         <div>
           {!isAllShown && <Button onClick={handleShowAll}>Show All</Button>}

@@ -19,6 +19,18 @@
   background-color: aliceblue;
 }
 
+.scrollableModal {
+  position: fixed;
+  top: 10vh;
+  left: 10%;
+  width: 80%;
+  z-index: 100;
+  color: var(--primary-color);
+  background-color: aliceblue;
+  height: 80vh;
+  overflow: scroll;
+}
+
 .header {
   display: flex;
   align-items: center;
@@ -34,6 +46,12 @@
 
 .content {
   padding: 1rem;
+  overflow-y: auto;
+}
+
+.scrollableContent {
+  padding: 1rem;
+  overflow-y: auto;
 }
 
 .actions {

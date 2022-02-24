@@ -1,15 +1,22 @@
 .question {
+  padding: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 10px;
+  gap: 20px;
 }
 
 .questionType {
-  border-top: solid var(--purple-color) 1px;
   height: 100%;
   display: flex;
   align-items: center;
+  gap: var(--gap);
+}
+
+.questionTitle {
+  border-top: solid var(--purple-color) 1px;
+  display: flex;
+  gap: var(--gap);
 }
 
 .answers {
