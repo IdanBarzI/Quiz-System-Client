@@ -5,25 +5,8 @@ import { Input, Line, Typography } from "../Ui";
 import classes from "./TestFormManager.module.css";
 
 const TestFormManager = () => {
-  const [{ selectedTest }, dispatch] = useStore();
-  const questionTitle = selectedQuestion?.title || "";
-  const questionType = selectedQuestion?.isMultipleAnswers || false;
-  const questionTags = selectedQuestion?.tags || [];
-  const questionAnswers = selectedQuestion?.answers || [];
-  const initialState = {
-    title: { value: questionTitle, touched: false, hasError: false, error: "" },
-    textBelow: { value: "", touched: false, hasError: false, error: "" },
-    isMultipleAnswers: questionType,
-    tags: { value: questionTags, touched: false, hasError: false, error: "" },
-    answers: {
-      value: questionAnswers,
-      touched: false,
-      hasError: false,
-      error: "",
-    },
-    isFormValid: true,
-  };
   const params = useParams();
+  const [{ selectedTest }, dispatch] = useStore();
   console.log(selectedTest);
 
   useEffect(() => {
