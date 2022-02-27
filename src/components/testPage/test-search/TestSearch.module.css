@@ -1,0 +1,8 @@
+.container {
+  padding: 1rem 2rem;
+  background-color: var(--oppesit-primary-color);
+  color: var(--primary-color);
+}
+.input {
+  margin-left: 1rem;
+}

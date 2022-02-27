@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import "./SignUpForm.css";
 
-import Input from "../../Ui/Elements/Input";
-import Icon from "../../Ui/Elements/Icon";
-import ToolTip from "../../Ui/Elements/ToolTip";
+import { Input, Icon, ToolTip } from "../Ui";
 import validator from "validator";
-import axios from "axios";
+
 const SignUpForm = (props) => {
   const [enteredEmail, setEnteredEmail] = useState("");
   const [enteredPassword, setEnteredPassword] = useState("");

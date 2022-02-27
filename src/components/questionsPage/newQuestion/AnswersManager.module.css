@@ -1,0 +1,10 @@
+.answers {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.buttons {
+  width: 20%;
+  height: 100%;
+}

@@ -1,0 +1,16 @@
+.table {
+background-color: var(--oppesit-secondery-color);
+color: var(--primary-color);
+}
+.head {
+background-color: var(--oppesit-secondery-color);
+}
+.row {
+cursor: pointer;
+}
+.cellContiner {
+padding-left: 10%;
+}
+.cell {
+color: var(--primary-color);
+}

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import useStickyState from "../hooks/use-sticky-state";
 
 const SettingsContext = React.createContext({
   theme: true,
@@ -6,7 +7,7 @@ const SettingsContext = React.createContext({
 });
 
 export const SettingsContextProvider = (props) => {
-  const [theme, setTheme] = useState(true);
+  const [theme, setTheme] = useStickyState(true, "theme");
 
   const themeSwitchHandler = () => {
     setTheme((prevCheck) => !prevCheck);
@@ -15,7 +16,7 @@ export const SettingsContextProvider = (props) => {
   return (
     <SettingsContext.Provider
       value={{
-        theme: theme,
+        theme,
         onThemeSwitch: themeSwitchHandler,
       }}
     >

@@ -1,0 +1,34 @@
+.answers {
+  display: flex;
+  flex-direction: column;
+}
+
+.answer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 3rem;
+}
+
+.answer:not(:first-child) {
+  border-top: solid var(--purple-color) 1px;
+}
+
+.body {
+  display: flex;
+  gap: 5px;
+}
+
+.isCorrect {
+  justify-self: end;
+  padding-right: 5px;
+}
+
+.iconV {
+  color: var(--succes-color);
+}
+
+.iconX {
+  color: var(--error-color);
+}

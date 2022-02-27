@@ -1,0 +1,21 @@
+.question {
+  font-size: 1rem;
+  color: var(--purple-color);
+}
+.tags {
+  display: flex;
+  justify-content: flex-start;
+}
+.tag {
+  font-size: 0.7rem;
+  color: var(--purple-color);
+  background-color: var(--primary-color);
+  margin: 0px 5px;
+  padding: 2px;
+  border-radius: 10px;
+  opacity: 0.8;
+}
+
+.tag:hover {
+  opacity: 1;
+}

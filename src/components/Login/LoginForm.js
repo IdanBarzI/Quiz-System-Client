@@ -1,11 +1,11 @@
 import React, { useState, useReducer, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import "./LoginForm.css";
 import AppContext from "../../context/AppContext";
-import Input from "../../Ui/Elements/Input";
-import Icon from "../../Ui/Elements/Icon";
-import ToolTip from "../../Ui/Elements/ToolTip";
-import axios from "axios";
+import { Input, Icon, ToolTip } from "../Ui";
+import serverAccess from "../../api/serverAccess";
 import { UPDATE_FORM, onFocusOut } from "../../lib/loginFormUtils";
+import LoadingAnimation from "../Ui/Elements/LoadingAnimation/LoadingAnimation";
 
 const initialState = {
   email: { value: "", touched: false, hasError: false, error: "" },
@@ -30,27 +30,32 @@ const formsReducer = (state, action) => {
 
 const LoginForm = (props) => {
   const [formState, dispatch] = useReducer(formsReducer, initialState);
-  const ctx = useContext(AppContext);
+  const { setUser, setToken } = useContext(AppContext);
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const formSubmissionHandler = (event) => {
     event.preventDefault();
     setIsLoading(true);
     if (formState.isFormValid) {
-      axios
-        .post("http://localhost:5000/users/login", {
+      serverAccess
+        .post("/users/login", {
           email: formState.email.value,
           password: formState.password.value,
         })
         .then(function (response) {
           setIsLoading(false);
           if (response.status !== 200) {
+            //show error to the user
+            return;
           }
-          ctx.user = response.data.user;
-          ctx.token = response.data.token;
+          setUser(response.data.user);
+          setToken(response.data.token);
+          navigate("/admin/main-menu", { replace: true });
         })
         .catch(function (error) {
           setIsLoading(false);
+          //show error to the user
           console.log(error);
         });
       console.log(isLoading);
@@ -59,8 +64,6 @@ const LoginForm = (props) => {
 
   const formReset = (event) => {
     event.preventDefault();
-    console.log(ctx.user);
-    console.log(ctx.token);
   };
 
   return (
@@ -103,13 +106,14 @@ const LoginForm = (props) => {
       </div>
       <div className="form-actions">
         {isLoading ? (
-          <p>Sending</p>
+          <LoadingAnimation />
         ) : (
           <button type="submit" className="form-btn btn-login">
             LOGIN
           </button>
         )}
       </div>
+      <div>123456789</div>
     </form>
   );
 };

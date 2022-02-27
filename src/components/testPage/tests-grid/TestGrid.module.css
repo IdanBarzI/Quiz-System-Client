@@ -1,0 +1,31 @@
+.container {
+  padding: 1rem 2rem;
+  background-color: var(--oppesit-primary-color);
+}
+.table {
+  background-color: var(--oppesit-secondery-color);
+  color: var(--primary-color);
+}
+.head {
+  background-color: var(--oppesit-secondery-color);
+  color: var(--primary-color);
+}
+.row {
+  cursor: pointer;
+}
+.cellContiner {
+  padding-left: 10%;
+}
+.cell {
+  color: var(--primary-color);
+}
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn {
+  text-decoration: none;
+  color: var(--secondery-bg-color);
+}
