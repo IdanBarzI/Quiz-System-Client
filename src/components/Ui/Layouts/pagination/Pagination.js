@@ -15,13 +15,18 @@ const Pagination = ({ itemsPerPage, totalItems, paginate, currentPage }) => {
             <li
               key={num}
               onClick={() => paginate(num)}
-              className={
-                num === currentPage
-                  ? classes.pageItemSelected
-                  : classes.pageItem
-              }
+              className={classes.pageItem}
             >
-              <span className={classes.pageLink}>{num}</span>
+              <a
+                href="#"
+                className={
+                  num === currentPage
+                    ? classes.pageLinkSelected
+                    : classes.pageLink
+                }
+              >
+                {num}
+              </a>
             </li>
           );
         })}

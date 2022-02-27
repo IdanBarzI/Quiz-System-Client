@@ -1,0 +1,12 @@
+.backButton {
+  text-decoration: none;
+  color: var(--oppesit-primary-color);
+  padding: 0.3rem;
+  background-color: var(--secondery-color);
+}
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0.5rem;
+  background-color: var(--oppesit-primary-color);
+}

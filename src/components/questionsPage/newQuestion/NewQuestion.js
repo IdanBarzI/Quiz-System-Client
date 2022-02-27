@@ -1,5 +1,12 @@
 import React, { useContext, useReducer } from "react";
-import { Modal, Typography, TextEditor, Button } from "../../Ui";
+import {
+  Modal,
+  Typography,
+  TextEditor,
+  Button,
+  LoadingSpinner,
+  Input,
+} from "../../Ui";
 import AnswersManager from "./AnswersManager";
 import AppContext from "../../../context/AppContext";
 import {
@@ -58,7 +65,7 @@ const NewQuestion = () => {
   };
 
   const [formState, dispatch] = useReducer(formsReducer, initialState);
-  console.log(formState);
+  console.log(selectedQuestion);
   const { isLoading, error, sendRequest: sendUpdateUserRequest } = useFetch();
   const enterUserHandler = async () => {
     if (formState.isFormValid) {
@@ -68,7 +75,7 @@ const NewQuestion = () => {
           method: "POST",
           body: {
             title: formState.title.value,
-            isMultipleAnswers: formState.isMultipleAnswers.value,
+            isMultipleAnswers: formState.isMultipleAnswers,
             tags: formState.tags.value,
             answers: formState.answers.value,
           },
@@ -76,7 +83,6 @@ const NewQuestion = () => {
         (question) => {
           console.log(questions);
           dispatchStore("ADD_QUESTION", question);
-          console.log(questions);
         }
       );
     }
@@ -98,11 +104,14 @@ const NewQuestion = () => {
           <div className={classes.questionType}>
             <Typography>Type:</Typography>
             <select
-              onChange={() => setQuestionType(dispatch)}
-              defaultValue={formState.isMultipleAnswers ? 1 : 2}
+              onChange={() => {
+                setQuestionType(dispatch);
+                console.log(formState);
+              }}
+              defaultValue={formState.isMultipleAnswers}
             >
-              <option value={1}>Multiple answer</option>
-              <option value={2}>Single answer</option>
+              <option value={true}>Multiple answer</option>
+              <option value={false}>Single answer</option>
             </select>
           </div>
           <div className={classes.questionTitle}>
@@ -117,18 +126,6 @@ const NewQuestion = () => {
               touched={formState.title.touched}
             />
           </div>
-          {/*<div className={classes.questionTitle}>
-             <Typography>Text:</Typography>
-            <TextEditor
-              content={formState.title.value}
-              setContent={(content) =>
-                onFocusOut("textBelow", content, dispatch, formState)
-              }
-              hasError={formState.textBelow.hasError}
-              errorMsg={formState.textBelow.error}
-              touched={formState.textBelow.touched}
-            /> 
-          </div>*/}
           <div className={classes.answers}>
             <AnswersManager
               isMultiple={formState.isMultipleAnswers}
@@ -139,12 +136,14 @@ const NewQuestion = () => {
             />
           </div>
           <div className={classes.tags}>
-            <Typography>Enter tags here:</Typography>
-            <br />
-            <input type="text" />
+            <Input name="Tags" />
           </div>
           <div className={classes.actions}>
-            <Button type="submit">Submit Changes</Button>
+            {isLoading ? (
+              <LoadingSpinner />
+            ) : (
+              <Button type="submit">Submit Changes</Button>
+            )}
           </div>
         </div>
       </form>

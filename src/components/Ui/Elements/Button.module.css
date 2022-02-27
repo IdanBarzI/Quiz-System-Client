@@ -14,3 +14,8 @@
 .btnSave:hover {
   background-color: var(--secondery-color);
 }
+
+.btnSave:disabled {
+  background-color: rgb(141, 143, 144);
+  cursor: not-allowed;
+}

@@ -1,7 +1,6 @@
-import React, { useEffect, useState, useCallback, Fragment } from "react";
-import classes from "./QuestionGrid.module.css";
-// import QUESTIONS from "../../../mocks/questionsMock.json";
+import React, { useState, useEffect, Fragment } from "react";
 import { useStore } from "../../../store/store";
+import useFetch from "../../../hooks/use-fetch";
 import QuestionSearch from "../questionSearch/QuestionSearch";
 import QuestionAndTags from "../questionAnbdTags/QuestionAndTags";
 import QuestionPreview from "../questionPreview/QuestionPreview";
@@ -15,21 +14,37 @@ import {
   TableHead,
   TableRow,
 } from "@material-ui/core";
+import classes from "./QuestionGrid.module.css";
 
 const PER_PAGE = 5;
 
 const QuestionGrid = (props) => {
-  const [{ questions, selectedQuestion, questionPage }, dispatch] = useStore();
+  const [{ questionsToShow, selectedQuestion, questionPage }, dispatch] =
+    useStore();
   const [currentPage, setCurrentPage] = useState(1);
   const [questionsPerPage, setQuestionsPerPage] = useState(PER_PAGE);
   const [isAllShown, setIsAllShown] = useState(false);
 
   const indexOfLastQuestion = currentPage * questionsPerPage;
   const indexOfFirstQuestion = indexOfLastQuestion - questionsPerPage;
-  const currentQuestions = questions.slice(
+  const currentQuestions = questionsToShow.slice(
     indexOfFirstQuestion,
     indexOfLastQuestion
   );
+
+  const { isLoading, error, sendRequest: sendUpdateUserRequest } = useFetch();
+  const enterUserHandler = async (questionId) => {
+    console.log(questionId);
+    await sendUpdateUserRequest(
+      {
+        url: `http://localhost:5000/questions/${questionId}`,
+        method: "DELETE",
+      },
+      () => {
+        dispatch("DELETE_QESTION", questionId);
+      }
+    );
+  };
 
   const paginate = (number) => {
     setCurrentPage(number);
@@ -37,7 +52,7 @@ const QuestionGrid = (props) => {
 
   const handleShowAll = () => {
     setCurrentPage(1);
-    setQuestionsPerPage(questions.length);
+    setQuestionsPerPage(questionsToShow.length);
     setIsAllShown(true);
   };
   const handleHide = () => {
@@ -59,8 +74,16 @@ const QuestionGrid = (props) => {
     dispatch("TOGGLE_MODAL_EDIT");
   };
 
+  const handleDelete = (question) => {
+    enterUserHandler(question._id);
+  };
+
   const renderTableBody = () => {
     return currentQuestions.map((quest, indx) => {
+      let date = "Unknown";
+      if (quest.updatedAt) {
+        date = new Date(quest?.updatedAt).toISOString().slice(0, 10);
+      }
       return (
         <Fragment key={quest._id}>
           <TableRow className={classes.row} key={quest._id}>
@@ -73,9 +96,7 @@ const QuestionGrid = (props) => {
               </Typography>
             </TableCell>
             <TableCell>
-              <Typography className={classes.cell}>
-                {quest.updatedAt}
-              </Typography>
+              <Typography className={classes.cell}>{date}</Typography>
             </TableCell>
             <TableCell>
               <Typography className={classes.cell}>
@@ -94,7 +115,7 @@ const QuestionGrid = (props) => {
                     Show
                   </Button>
                   <Button onClick={() => handleOpenEdit(quest)}>Edit</Button>
-                  <Button>Delete</Button>
+                  <Button onClick={() => handleDelete(quest)}>Delete</Button>
                 </div>
               </Typography>
             </TableCell>
@@ -121,9 +142,7 @@ const QuestionGrid = (props) => {
                 <Typography className={classes.cell}>Id</Typography>
               </TableCell>
               <TableCell>
-                <Typography className={classes.cell}>
-                  Question text and tags
-                </Typography>
+                <Typography className={classes.cell}>Title And Tags</Typography>
               </TableCell>
               <TableCell>
                 <Typography className={classes.cell}>Last Update</Typography>
@@ -147,11 +166,12 @@ const QuestionGrid = (props) => {
           itemsPerPage={questionsPerPage}
           currentPage={currentPage}
           paginate={paginate}
-          totalItems={questions.length}
+          totalItems={questionsToShow.length}
         />
         <div>
-          {!isAllShown && <Button onClick={handleShowAll}>Show All</Button>}
-          {isAllShown && <Button onClick={handleHide}>Hide</Button>}
+          <Button onClick={!isAllShown ? handleShowAll : handleHide}>
+            {!isAllShown ? <div>Show All</div> : <div>Hide</div>}
+          </Button>
         </div>
       </Line>
     </div>
