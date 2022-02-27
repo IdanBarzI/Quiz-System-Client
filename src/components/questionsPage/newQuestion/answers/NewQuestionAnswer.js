@@ -1,42 +1,60 @@
 import React, { useContext, useEffect, useState } from "react";
-import AnswersContext from "../../../../context/AnswersContext";
 import { Input, Button } from "../../../Ui";
 import classes from "./NewQuestionAnswer.module.css";
 
-const NewQuestionAnswer = ({ answer, onRemove, correct, isMultiple }) => {
-  const [isCorrect, setIsCorrect] = useState(correct);
-  const { answers, setAnswers } = useContext(AnswersContext);
+const NewQuestionAnswer = (props) => {
+  const [error, setError] = useState("");
 
-  const handleCorrectChange = () => {
-    setIsCorrect((preState) => !preState);
-    console.log(answers);
+  const handleMultiCorrectChange = () => {
+    [...props.answers].filter((ans) => {
+      if (ans === props.answer) {
+        ans.isCorrect = !ans.isCorrect;
+      }
+    });
 
-    if (isCorrect) {
-      const tmpAns = [...answers].filter((ans) => ans !== answer); //all the uncorrect answers
-      answer.isCorrect = true;
-      console.log(tmpAns);
-      console.log(answer);
-      setAnswers([...tmpAns, answer]);
-    }
+    props.setAnswers([...props.answers]);
+  };
+
+  const handleRadioCorrectChange = () => {
+    [...props.answers].filter((ans) => {
+      if (ans === props.answer) {
+        ans.isCorrect = !ans.isCorrect;
+      } else {
+        ans.isCorrect = false;
+      }
+    });
+
+    props.setAnswers([...props.answers]);
   };
 
   const handleTextChange = (e) => {
     console.log(e.target.value);
-    // answer.title = e.target.value;
-    // const filtered = [...answers].filter((ans)=> answer.title !== ans.title);
-    // setAnswers([...filtered,answer])
+    if (e.target.value.length < 1) {
+      setError("Answer Can not be Empty");
+    } else {
+      setError("");
+    }
+
+    [...props.answers].filter((ans) => {
+      if (ans === props.answer) {
+        ans.title = e.target.value;
+      }
+    });
+
+    props.setAnswers([...props.answers]);
   };
 
   const renderCorrect = () => {
-    if (!isMultiple) {
+    console.log(props.answer.isCorrect);
+    if (!props.isMultiple) {
       return (
         <div>
           <input
             type="radio"
             id="isCorrect"
             name="isCorrect"
-            onChange={handleCorrectChange}
-            han
+            checked={props.answer.isCorrect}
+            onChange={handleRadioCorrectChange}
           />
         </div>
       );
@@ -47,7 +65,8 @@ const NewQuestionAnswer = ({ answer, onRemove, correct, isMultiple }) => {
             type="checkbox"
             name="multiCorrect"
             id="multiCorrect"
-            onChange={handleCorrectChange}
+            checked={props.answer.isCorrect}
+            onChange={handleMultiCorrectChange}
           />
         </div>
       );
@@ -56,12 +75,17 @@ const NewQuestionAnswer = ({ answer, onRemove, correct, isMultiple }) => {
 
   return (
     <div className={classes.container}>
-      <Button onClick={onRemove}>X</Button>
-      <input
-        type="text"
-        onChange={handleTextChange}
-        placeholder={answer ? answer.title : ""}
-      />
+      <Button onClick={props.onRemove}>X</Button>
+      <div className={classes.answerContainer}>
+        <Input
+          defaultValue={props.answer.title}
+          hasError={true}
+          touched={true}
+          errorMsg={error}
+          name="answer"
+          onBlur={handleTextChange}
+        />
+      </div>
       {renderCorrect()}
     </div>
   );

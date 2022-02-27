@@ -8,6 +8,7 @@ const StudentTest = React.lazy(() => import("./pages/StudentTest"));
 const MainMenu = React.lazy(() => import("./pages/MainMenu"));
 const Questions = React.lazy(() => import("./pages/Questions"));
 const Tests = React.lazy(() => import("./pages/Tests"));
+const TestForm = React.lazy(() => import("./pages/TestForm"));
 const Reports = React.lazy(() => import("./pages/Reports"));
 const NotFound = React.lazy(() => import("./pages/NotFound"));
 
@@ -30,7 +31,8 @@ function App() {
           <Route path="/" element={<ProtectedRoute />}>
             <Route path="/admin/main-menu" element={<MainMenu />} />
             <Route path="/admin/questions" element={<Questions />} />
-            <Route path="/admin/tests" element={<Tests />} />
+            <Route exac path="/admin/tests" element={<Tests />} />
+            <Route path="/admin/tests/:testId" element={<TestForm />} />
             <Route path="/admin/reports" element={<Reports />} />
           </Route>
 

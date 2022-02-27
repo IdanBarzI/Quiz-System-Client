@@ -1,113 +1,153 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
-import AppContext from "../../../context/AppContext";
-import { Modal, Typography, TextEditor, Button } from "../../Ui";
+import React, { useContext, useReducer } from "react";
+import {
+  Modal,
+  Typography,
+  TextEditor,
+  Button,
+  LoadingSpinner,
+  Input,
+} from "../../Ui";
 import AnswersManager from "./AnswersManager";
-import sendAuthTokenHeader from "../../../api/tokenConfig";
-import AnswersContext from "../../../context/AnswersContext";
-import serverAccess from "../../../api/serverAccess";
+import AppContext from "../../../context/AppContext";
+import {
+  onFocusOut,
+  setQuestionType,
+  UPDATE_FORM,
+  UPDATE_QUESTION_TYPE,
+} from "../../../lib/questionFormUtils";
+import useFetch from "../../../hooks/use-fetch";
+import { useStore } from "../../../store/store";
 import classes from "./NewQuestion.module.css";
 
-const NewQuestion = ({ setClose, question, isEdit }) => {
-  const appCtx = useContext(AppContext);
+const formsReducer = (state, action) => {
+  switch (action.type) {
+    case UPDATE_FORM:
+      const { name, value, touched, hasError, error, isFormValid } =
+        action.data;
+      return {
+        ...state,
+        [name]: { ...state[name], touched, value, hasError, error },
+        isFormValid,
+      };
 
-  const [questionType, setQuestionType] = useState(
-    question ? question.isMultipleAnswers : false
-  );
-  const [questionText, setQuestionText] = useState(
-    question ? question.title : ""
-  );
-  const [tags, setTags] = useState(question ? question.tags : []);
-  const [tagText, setTagText] = useState("");
-  const [answers, setAnswers] = useState(question ? question.answers : []);
+    case UPDATE_QUESTION_TYPE:
+      return {
+        ...state,
+        isMultipleAnswers: !state.isMultipleAnswers,
+      };
 
-  const answersValue = useMemo(
-    () => ({ answers, setAnswers }),
-    [answers, setAnswers]
-  );
+    default:
+      return state;
+  }
+};
 
-  useEffect(() => {
-    if (tags.length > 0) {
-      let tagString;
-      tags.map((tag) => {
-        tagString += tag.title + " , ";
-      });
-      setTagText(tagString);
+const NewQuestion = () => {
+  const [{ selectedQuestion, questions }, dispatchStore] = useStore();
+  const { fieldOfStudy } = useContext(AppContext);
+
+  const isEdit = selectedQuestion ? true : false;
+  const questionTitle = selectedQuestion?.title || "";
+  const questionType = selectedQuestion?.isMultipleAnswers || false;
+  const questionTags = selectedQuestion?.tags || [];
+  const questionAnswers = selectedQuestion?.answers || [];
+  const initialState = {
+    title: { value: questionTitle, touched: false, hasError: false, error: "" },
+    textBelow: { value: "", touched: false, hasError: false, error: "" },
+    isMultipleAnswers: questionType,
+    tags: { value: questionTags, touched: false, hasError: false, error: "" },
+    answers: {
+      value: questionAnswers,
+      touched: false,
+      hasError: false,
+      error: "",
+    },
+    isFormValid: true,
+  };
+
+  const [formState, dispatch] = useReducer(formsReducer, initialState);
+  console.log(selectedQuestion);
+  const { isLoading, error, sendRequest: sendUpdateUserRequest } = useFetch();
+  const enterUserHandler = async () => {
+    if (formState.isFormValid) {
+      await sendUpdateUserRequest(
+        {
+          url: `http://localhost:5000/qusetions`,
+          method: "POST",
+          body: {
+            title: formState.title.value,
+            isMultipleAnswers: formState.isMultipleAnswers,
+            tags: formState.tags.value,
+            answers: formState.answers.value,
+          },
+        },
+        (question) => {
+          console.log(questions);
+          dispatchStore("ADD_QUESTION", question);
+        }
+      );
     }
-  }, []);
-  const handleSelectionChanged = () => {
-    setQuestionType(!questionType);
   };
 
   const handleSubmitChanges = async (e) => {
     e.preventDefault();
-    const tagTitles = tagText.split(",");
-    const newTags = [];
-    for (let i = 0; i < tagTitles.length; i++) {
-      newTags.push({
-        title: tagTitles[i].title,
-      });
-    }
-    setTags(newTags);
-
-    if (isEdit) {
-      try {
-        const questionToUpdate = {};
-        const res = await serverAccess.patch(
-          "/qusetions",
-          sendAuthTokenHeader(appCtx.token)
-        );
-      } catch (err) {}
-    } else {
-      const newQuestion = {};
-      try {
-        const res = await serverAccess.post(
-          "/qusetions",
-          newQuestion,
-          sendAuthTokenHeader(appCtx.token)
-        );
-        alert(JSON.stringify(res));
-      } catch (err) {
-        console.log(err);
-      }
-    }
+    enterUserHandler();
   };
 
   return (
-    <AnswersContext.Provider value={answersValue}>
-      <Modal onCancle={setClose} title={appCtx.fieldOfStudy}>
-        <form onSubmit={(e) => handleSubmitChanges(e)}>
-          <div className={classes.question}>
-            <div className={classes.questionText}>
-              <TextEditor
-                text={questionText}
-                content={questionText}
-                setContent={setQuestionText}
-              />
-            </div>
-            <div className={classes.questionType}>
-              <select
-                onChange={handleSelectionChanged}
-                defaultValue={questionType ? 1 : 2}
-              >
-                <option value={1}>Multiple answer</option>
-                <option value={2}>Single answer</option>
-              </select>
-            </div>
-            <div className={classes.answers}>
-              <AnswersManager isMultiple={questionType} />
-            </div>
-            <div className={classes.tags}>
-              <Typography>Enter tags here:</Typography>
-              <br />
-              <input type="text" onChange={(e) => setTags(e.target.value)} />
-            </div>
-            <div className={classes.actions}>
-              <Button type="submit">Submit Changes</Button>
-            </div>
+    <Modal
+      onCancle={() => dispatchStore("TOGGLE_MODAL_EDIT")}
+      title={fieldOfStudy}
+      scroll={true}
+    >
+      <form onSubmit={(e) => handleSubmitChanges(e)}>
+        <div className={classes.question}>
+          <div className={classes.questionType}>
+            <Typography>Type:</Typography>
+            <select
+              onChange={() => {
+                setQuestionType(dispatch);
+                console.log(formState);
+              }}
+              defaultValue={formState.isMultipleAnswers}
+            >
+              <option value={true}>Multiple answer</option>
+              <option value={false}>Single answer</option>
+            </select>
           </div>
-        </form>
-      </Modal>
-    </AnswersContext.Provider>
+          <div className={classes.questionTitle}>
+            <Typography>Title:</Typography>
+            <TextEditor
+              content={formState.title.value}
+              setContent={(content) =>
+                onFocusOut("title", content, dispatch, formState)
+              }
+              hasError={formState.title.hasError}
+              errorMsg={formState.title.error}
+              touched={formState.title.touched}
+            />
+          </div>
+          <div className={classes.answers}>
+            <AnswersManager
+              isMultiple={formState.isMultipleAnswers}
+              answers={formState.answers.value}
+              setAnswers={(content) =>
+                onFocusOut("answers", content, dispatch, formState)
+              }
+            />
+          </div>
+          <div className={classes.tags}>
+            <Input name="Tags" />
+          </div>
+          <div className={classes.actions}>
+            {isLoading ? (
+              <LoadingSpinner />
+            ) : (
+              <Button type="submit">Submit Changes</Button>
+            )}
+          </div>
+        </div>
+      </form>
+    </Modal>
   );
 };
 

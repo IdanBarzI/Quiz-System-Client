@@ -4,9 +4,11 @@ import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import App from "./App";
 import { AppContextProvider } from "./context/AppContext";
-import configureStore from "./store/questions-store";
+import configureQestionsStore from "./store/questions-store";
+import configureTestsStore from "./store/tests-store";
 
-configureStore();
+configureQestionsStore();
+configureTestsStore();
 
 ReactDOM.render(
   <BrowserRouter>

@@ -9,6 +9,7 @@ export { default as Box } from "./Layouts/Box";
 export { default as Article } from "./Layouts/Article";
 export { default as Card } from "./Layouts/Card";
 export { default as Typography } from "./Layouts/Typography/Typography";
+export { default as Pagination } from "./Layouts/pagination/Pagination";
 
 //elements
 export { default as Button } from "./Elements/Button";

@@ -11,21 +11,21 @@
   --gap-s: 10px;
 }
 
-[data-theme="light"] {
+[data-theme="dark"] {
   --primary-color: #ffffff;
   --secondery-color: #cccccc;
-  --orange-color: #ff8800;
+  --orange-color: #f09630;
 
   --oppesit-primary-color: #1b1b1b;
   --oppesit-secondery-color: #212121;
 
-  --primary-bg-color: #424242;
+  --primary-bg-color: #222222;
 }
 
-[data-theme="dark"] {
-  --primary-color: #1b1b1b;
+[data-theme="light"] {
+  --primary-color: #222222;
   --secondery-color: #212121;
-  --orange-color: #cc721e;
+  --orange-color: #ff7b00;
 
   --oppesit-primary-color: #ffffff;
   --oppesit-secondery-color: #cccccc;
