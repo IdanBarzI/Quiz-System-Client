@@ -22,4 +22,4 @@ export { default as ToolTip } from "./Elements/ToolTip";
 export { default as HoverBox } from "./Elements/HoverBox";
 export { default as LoadingSpinner } from "./Elements/LoadingSpinner";
 export { default as Modal } from "./Elements/Modal/Modal";
-export { default as TextEditor } from "./Elements/TextEditor/TextEditor";
+export { default as TextEditor } from "./Elements/textEditor/TextEditor";

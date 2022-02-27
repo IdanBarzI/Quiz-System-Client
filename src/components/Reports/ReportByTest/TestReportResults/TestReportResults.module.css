@@ -1,0 +1,14 @@
+.detailsContainer{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 10rem;
+    margin-bottom: 5rem;
+}
+h2{
+    text-align: center;
+}
+.tablesContainer{
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    row-gap: 5rem;
+}
