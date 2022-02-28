@@ -113,7 +113,6 @@ const LoginForm = (props) => {
           </button>
         )}
       </div>
-      <div>123456789</div>
     </form>
   );
 };
