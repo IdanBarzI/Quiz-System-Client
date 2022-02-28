@@ -35,6 +35,9 @@ const NavBar = (props) => {
                     name="fields"
                     onChange={(e) => setFieldOfStudy(e.target.value)}
                   >
+                    <option disabled selected value>
+                      -- select an Field --
+                    </option>
                     {renderFields()}
                   </select>
                 </>

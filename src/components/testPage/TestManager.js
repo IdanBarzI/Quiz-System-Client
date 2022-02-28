@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useStore } from "../../store/store";
+import { Link } from "react-router-dom";
 import useAxiosFetch from "../../hooks/use-axios";
 import classes from "./TestManager.module.css";
 import TestGrid from "./tests-grid/TestGrid";
@@ -20,7 +21,11 @@ const TestManager = () => {
         <a className={classes.backButton} href="/admin/main-menu">
           back
         </a>
-        <button onClick={handleSetNewTestOpen}>Create New Test</button>
+        <button onClick={handleSetNewTestOpen}>
+          <Link className={classes.btn} to={`/admin/tests/1`}>
+            Create New Test
+          </Link>
+        </button>
       </div>
     </div>
   );

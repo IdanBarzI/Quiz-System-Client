@@ -1,0 +1,11 @@
+.cellContiner {
+  padding-left: 10%;
+}
+.cell {
+  color: var(--primary-color);
+}
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}

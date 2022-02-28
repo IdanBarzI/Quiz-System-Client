@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { useStore } from "../../../store/store";
 import { Link } from "react-router-dom";
 import TestSearch from "../test-search/TestSearch";
@@ -48,19 +48,25 @@ const TestGrid = () => {
       return (
         <Fragment key={idx}>
           <TableRow key={test._id} className={classes.row}>
-            <TableCell className={classes.cell}>{idx + 1}</TableCell>
+            <TableCell className={classes.cell}>
+              <Typography className={classes.cell}>{idx + 1}</Typography>
+            </TableCell>
             <TableCell className={classes.cell}>
               <Button onClick={() => handleCopyLinkToClipBoard(test.testUrl)}>
                 Copy Link
               </Button>
             </TableCell>
-            <TableCell className={classes.cell}>{test.title}</TableCell>
             <TableCell className={classes.cell}>
-              {test.questions.length}
+              <Typography className={classes.cell}>{test.title}</Typography>
+            </TableCell>
+            <TableCell className={classes.cell}>
+              <Typography className={classes.cell}>
+                {test.questions.length}
+              </Typography>
             </TableCell>
             <TableCell className={classes.cell}>
               <Line>
-                <Button>
+                <Button onClick={() => dispatch("TOGGLE_SELECTED", test._id)}>
                   <Link className={classes.btn} to={`/admin/tests/${test._id}`}>
                     Edit
                   </Link>
@@ -81,13 +87,21 @@ const TestGrid = () => {
         <Table className={classes.table} aria-label="simple-table">
           <TableHead className={classes.head}>
             <TableRow className={classes.row}>
-              <TableCell className={classes.cell}>Id</TableCell>
-              <TableCell className={classes.cell}>Link</TableCell>
-              <TableCell className={classes.cell}>Test Name</TableCell>
-              <TableCell className={classes.cell}>
-                Number of Questions
+              <TableCell>
+                <div className={classes.cell}>Id</div>
               </TableCell>
-              <TableCell className={classes.cell}>Options</TableCell>
+              <TableCell>
+                <div className={classes.cell}>Link</div>
+              </TableCell>
+              <TableCell>
+                <div className={classes.cell}>Test Name</div>
+              </TableCell>
+              <TableCell>
+                <div className={classes.cell}>Number of Questions</div>
+              </TableCell>
+              <TableCell>
+                <div className={classes.cell}>Options</div>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>{renderTableBody()}</TableBody>

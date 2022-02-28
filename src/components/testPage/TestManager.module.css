@@ -10,3 +10,8 @@
   padding: 1rem 0.5rem;
   background-color: var(--oppesit-primary-color);
 }
+
+.btn {
+  text-decoration: none;
+  color: var(--secondery-bg-color);
+}

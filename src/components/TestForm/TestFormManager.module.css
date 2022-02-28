@@ -1,5 +1,12 @@
+.wraper {
+  padding-bottom: var(--gap);
+  background-color: var(--oppesit-primary-color);
+  box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
 .form {
-  width: 75vw;
+  width: 50vw;
   display: flex;
   flex-direction: column;
   align-items: center;
