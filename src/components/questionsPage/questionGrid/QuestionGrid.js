@@ -65,12 +65,12 @@ const QuestionGrid = (props) => {
   };
 
   const handleOpenPreviewClick = (question) => {
-    dispatch("TOGGLE_SELECTED", question._id);
+    dispatch("TOGGLE_SELECTED_QUESTION", question._id);
     dispatch("TOGGLE_MODAL_PREVIEW");
   };
 
   const handleOpenEdit = (question) => {
-    dispatch("TOGGLE_SELECTED", question._id);
+    dispatch("TOGGLE_SELECTED_QUESTION", question._id);
     dispatch("TOGGLE_MODAL_EDIT");
   };
 
