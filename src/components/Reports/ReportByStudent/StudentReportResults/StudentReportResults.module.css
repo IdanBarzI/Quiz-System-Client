@@ -1,0 +1,6 @@
+.resultContainer{
+    margin-top: 2.5rem;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    row-gap: 5rem;
+}

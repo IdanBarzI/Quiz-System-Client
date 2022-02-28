@@ -6,15 +6,22 @@ import {
 
 export const UPDATE_FORM = UPDATE_FORM_GENERY;
 export const UPDATE_QUESTION_TYPE = "UPDATE_QUESTION_TYPE";
+export const ADD_TAG = "ADD_TAG";
 
 export const onFocusOut = (name, value, dispatch, formState) => {
   fieldOnFocusOut(name, value, dispatch, formState, validateInput);
 };
 
 export const setQuestionType = (dispatch) => {
-  console.log("UPDATE_QUESTION_TYPE");
   dispatch({
     type: UPDATE_QUESTION_TYPE,
+  });
+};
+
+export const addTag = (dispatch, tag) => {
+  dispatch({
+    type: ADD_TAG,
+    data: { tag },
   });
 };
 

@@ -11,13 +11,14 @@ const Input = (props) => {
         <Icon i={props.i} />
         <div className="form">
           <input
-            required
+            required={!props.notRequired}
             defaultValue={props.defaultValue}
             value={props.value}
             name={props.name}
             onChange={props.onChange}
             onBlur={props.onBlur}
             type={props.type || "text"}
+            autoComplete="new-password"
           />
           <label htmlFor={props.name} className="label-name">
             <span className="content-name">{props.name}</span>

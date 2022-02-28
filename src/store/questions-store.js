@@ -2,7 +2,7 @@ import { initStore } from "./store";
 
 const configureQestionsStore = () => {
   const actions = {
-    TOGGLE_SELECTED: (curState, questionId) => {
+    TOGGLE_SELECTED_QUESTION: (curState, questionId) => {
       const quesIndex = curState.questions.findIndex(
         (q) => q._id === questionId
       );
@@ -63,11 +63,17 @@ const configureQestionsStore = () => {
         questions: [...questions],
       };
     },
+    SET_TAGS: (curState, tags) => {
+      return {
+        tags: [...tags],
+      };
+    },
   };
 
   initStore(actions, {
     questions: [],
     questionsToShow: [],
+    tags: [],
     selectedQuestion: {},
     questionPage: { modalPreviewOpen: false, modalEditOpen: false },
   });

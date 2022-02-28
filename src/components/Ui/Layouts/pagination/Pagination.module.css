@@ -4,8 +4,8 @@
   padding: 10px 20px;
   border-radius: 50px;
   box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5);
-  background: var(--oppesit-secondery-color);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  background: var(--oppesit-secondery-color);
 }
 .pageItem {
   list-style: none;
