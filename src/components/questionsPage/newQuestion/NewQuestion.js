@@ -1,4 +1,7 @@
-import React, { useContext, useReducer } from "react";
+import React, { useContext, useEffect, useReducer } from "react";
+import { useStore } from "../../../store/store";
+import useFetch from "../../../hooks/use-fetch";
+import useAxiosFetch from "../../../hooks/use-axios";
 import {
   Modal,
   Typography,
@@ -6,17 +9,19 @@ import {
   Button,
   LoadingSpinner,
   Input,
+  InputSearch,
 } from "../../Ui";
 import AnswersManager from "./AnswersManager";
 import AppContext from "../../../context/AppContext";
 import {
   onFocusOut,
   setQuestionType,
+  addTag,
   UPDATE_FORM,
   UPDATE_QUESTION_TYPE,
+  ADD_TAG,
 } from "../../../lib/questionFormUtils";
-import useFetch from "../../../hooks/use-fetch";
-import { useStore } from "../../../store/store";
+import QuestionAndTags from "../questionAnbdTags/QuestionAndTags";
 import classes from "./NewQuestion.module.css";
 
 const formsReducer = (state, action) => {
@@ -36,13 +41,23 @@ const formsReducer = (state, action) => {
         isMultipleAnswers: !state.isMultipleAnswers,
       };
 
+    case ADD_TAG:
+      const { tag } = action.data;
+      return {
+        ...state,
+        tags: [...state.tags, tag],
+      };
+
     default:
       return state;
   }
 };
 
 const NewQuestion = () => {
-  const [{ selectedQuestion, questions }, dispatchStore] = useStore();
+  const [{ selectedQuestion, questions, tags }, dispatchStore] = useStore();
+
+  const { data, fetchError, isLoadingTags } = useAxiosFetch(`/tags`);
+
   const { fieldOfStudy } = useContext(AppContext);
 
   const isEdit = selectedQuestion ? true : false;
@@ -54,7 +69,7 @@ const NewQuestion = () => {
     title: { value: questionTitle, touched: false, hasError: false, error: "" },
     textBelow: { value: "", touched: false, hasError: false, error: "" },
     isMultipleAnswers: questionType,
-    tags: { value: questionTags, touched: false, hasError: false, error: "" },
+    tags: questionTags,
     answers: {
       value: questionAnswers,
       touched: false,
@@ -65,7 +80,7 @@ const NewQuestion = () => {
   };
 
   const [formState, dispatch] = useReducer(formsReducer, initialState);
-  console.log(selectedQuestion);
+  console.log(formState);
   const { isLoading, error, sendRequest: sendUpdateUserRequest } = useFetch();
   const enterUserHandler = async () => {
     if (formState.isFormValid) {
@@ -76,7 +91,7 @@ const NewQuestion = () => {
           body: {
             title: formState.title.value,
             isMultipleAnswers: formState.isMultipleAnswers,
-            tags: formState.tags.value,
+            tags: formState.tags,
             answers: formState.answers.value,
           },
         },
@@ -106,7 +121,6 @@ const NewQuestion = () => {
             <select
               onChange={() => {
                 setQuestionType(dispatch);
-                console.log(formState);
               }}
               defaultValue={formState.isMultipleAnswers}
             >
@@ -135,8 +149,15 @@ const NewQuestion = () => {
               }
             />
           </div>
+
           <div className={classes.tags}>
-            <Input name="Tags" />
+            <InputSearch
+              list={tags}
+              notRequired={true}
+              name="Tags"
+              onSelect={(tag) => addTag(dispatch, tag)}
+            />
+            <QuestionAndTags tags={formState.tags} />
           </div>
           <div className={classes.actions}>
             {isLoading ? (
@@ -150,5 +171,7 @@ const NewQuestion = () => {
     </Modal>
   );
 };
+
+//onSelect={console.log(tag)}
 
 export default NewQuestion;

@@ -63,11 +63,17 @@ const configureQestionsStore = () => {
         questions: [...questions],
       };
     },
+    SET_TAGS: (curState, tags) => {
+      return {
+        tags: [...tags],
+      };
+    },
   };
 
   initStore(actions, {
     questions: [],
     questionsToShow: [],
+    tags: [],
     selectedQuestion: {},
     questionPage: { modalPreviewOpen: false, modalEditOpen: false },
   });

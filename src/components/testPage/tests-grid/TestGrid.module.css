@@ -4,10 +4,8 @@
 }
 .table {
   background-color: var(--oppesit-secondery-color);
-  color: var(--primary-color);
 }
 .head {
-  background-color: var(--oppesit-secondery-color);
   color: var(--primary-color);
 }
 .row {
