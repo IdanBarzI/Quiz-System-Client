@@ -17,6 +17,7 @@ import classes from "./NewTestQuestions.module.css";
 
 const PER_PAGE = 5;
 
+
 const NewTestQuestions = (props) => {
   const [{ questionsToShow, selectedQuestion, questionPage }, dispatch] =
     useStore();
@@ -56,6 +57,24 @@ const NewTestQuestions = (props) => {
     dispatch("TOGGLE_MODAL_PREVIEW");
   };
 
+  const handleSelectQuestion=(question)=>{
+    if(props.selectedQuestions.some((quest)=>quest.value._id===question._id)){
+      const filtered = props.selectedQuestions.filter((quest)=>quest.value._id !== question._id)
+      props.setSelectedQuestions(filtered);
+    }
+    else{
+      props.setSelectedQuestions((prevState)=>[...prevState,{value:question,isSelected:true}])
+    }
+  }
+
+  const getRowClassName=(question)=>{
+    if(props.selectedQuestions.some((quest)=>quest.value._id===question._id)){
+      return classes.rowSelected
+    }
+    else return classes.row
+  }
+
+
   const renderTableBody = () => {
     return currentQuestions.map((quest, indx) => {
       let date = "Unknown";
@@ -64,7 +83,7 @@ const NewTestQuestions = (props) => {
       }
       return (
         <Fragment key={quest._id}>
-          <TableRow className={classes.row} key={quest._id}>
+          <TableRow className={getRowClassName(quest)} key={quest._id} onClick={()=>handleSelectQuestion(quest)}>
             <TableCell>
               <Typography className={classes.cell}>
                 <QuestionAndTags question={quest.title} tags={quest.tags} />
