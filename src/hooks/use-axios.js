@@ -8,6 +8,8 @@ const useAxiosFetch = (dataUrl) => {
   const [data, setData] = useState([]);
   const [fetchError, setFetchError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  console.log("useAxiosFetch");
+  console.log(dataUrl);
 
   useEffect(() => {
     let isMounted = true;

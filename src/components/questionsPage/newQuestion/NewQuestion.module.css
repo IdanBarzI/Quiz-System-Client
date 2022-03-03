@@ -16,6 +16,7 @@
 .questionTitle {
   border-top: solid var(--purple-color) 1px;
   display: flex;
+  align-items: center;
   gap: var(--gap);
 }
 
@@ -33,4 +34,8 @@
 .actions {
   display: flex;
   justify-content: center;
+}
+
+.submitBtn {
+  margin: 0 40%;
 }

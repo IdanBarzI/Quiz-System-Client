@@ -4,12 +4,11 @@ import { Modal, Icon, Typography } from "../../Ui";
 import { useStore } from "../../../store/store";
 
 const QuestionPreview = (props) => {
-  const [{ selectedQuestion, questionPage }, dispatch] = useStore();
-  // console.log(selectedQuestion, questionPage);
+  const { selectedQuestion } = useStore()[0];
 
   return (
     <Modal
-      onCancle={() => dispatch("TOGGLE_MODAL_PREVIEW")}
+      onCancle={() => props.onCancle()}
       title={selectedQuestion.title}
       scroll={false}
     >

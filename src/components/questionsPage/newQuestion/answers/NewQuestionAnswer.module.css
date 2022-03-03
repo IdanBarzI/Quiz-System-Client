@@ -5,6 +5,14 @@
   width: 100%;
 }
 
+input {
+  accent-color: var(--purple-color);
+}
+
 .answerContainer {
   width: 100%;
+}
+
+.removeBtn {
+  border-radius: 40%;
 }

@@ -3,10 +3,6 @@ import React, { useContext, useEffect, useState } from "react";
 import NewQuestionAnswer from "./answers/NewQuestionAnswer";
 import { Button } from "../../Ui";
 
-const EMPTY_ANSWER = {
-  title: "",
-};
-
 const AnswersManager = (props) => {
   console.log(props.answers);
   const handleRemoveAnswer = (answer) => {

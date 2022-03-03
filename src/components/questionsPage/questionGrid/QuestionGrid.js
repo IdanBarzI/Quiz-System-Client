@@ -2,6 +2,7 @@ import React, { useState, useCallback, Fragment } from "react";
 import { useStore } from "../../../store/store";
 import useFetch from "../../../hooks/use-fetch";
 import QuestionSearch from "../questionSearch/QuestionSearch";
+import NewQuestion from "../newQuestion/NewQuestion";
 import GridItem from "./GridItem/GridItem";
 import { Typography, Line, Button, Pagination } from "../../Ui";
 import {
@@ -17,8 +18,9 @@ import classes from "./QuestionGrid.module.css";
 const PER_PAGE = 5;
 
 const QuestionGrid = (props) => {
-  const [{ questionsToShow, selectedQuestion, questionPage }, dispatch] =
-    useStore();
+  console.log("RENDERING_GRID");
+  const [{ questionsToShow }, dispatch] = useStore();
+  const [openNewQuestion, setOpenNewQuestion] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [questionsPerPage, setQuestionsPerPage] = useState(PER_PAGE);
   const [isAllShown, setIsAllShown] = useState(false);
@@ -58,23 +60,19 @@ const QuestionGrid = (props) => {
     setIsAllShown(false);
   };
 
+  const handleOpenNewQuestion = (question) => {
+    dispatch("TOGGLE_SELECTED_QUESTION", -1);
+    setOpenNewQuestion(true);
+  };
+
   const renderTableBody = useCallback(() => {
     if (currentQuestions && currentQuestions.length > 0) {
       return currentQuestions.map((quest) => {
-        console.log("RENDERING");
         let date = "Unknown";
         if (quest.updatedAt) {
           date = new Date(quest?.updatedAt).toISOString().slice(0, 10);
         }
-        return (
-          <GridItem
-            key={quest._id}
-            quest={quest}
-            selectedQuestion={selectedQuestion}
-            questionPage={questionPage}
-            date={date}
-          />
-        );
+        return <GridItem key={quest._id} quest={quest} date={date} />;
       });
     }
   }, [currentQuestions]);
@@ -122,6 +120,16 @@ const QuestionGrid = (props) => {
           </Button>
         </div>
       </Line>
+      <Line justify="end">
+        <div>
+          <Button onClick={() => handleOpenNewQuestion()}>
+            Create New Question
+          </Button>
+        </div>
+      </Line>
+      {openNewQuestion && (
+        <NewQuestion onCancle={() => setOpenNewQuestion(false)} />
+      )}
     </div>
   );
 };
