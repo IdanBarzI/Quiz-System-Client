@@ -28,7 +28,6 @@ const NewQuestionAnswer = (props) => {
   };
 
   const handleTextChange = (e) => {
-    console.log(e.target.value);
     if (e.target.value.length < 1) {
       setError("Answer Can not be Empty");
     } else {
@@ -45,7 +44,6 @@ const NewQuestionAnswer = (props) => {
   };
 
   const renderCorrect = () => {
-    console.log(props.answer.isCorrect);
     if (!props.isMultiple) {
       return (
         <div>
@@ -75,7 +73,9 @@ const NewQuestionAnswer = (props) => {
 
   return (
     <div className={classes.container}>
-      <Button onClick={props.onRemove}>X</Button>
+      <Button onClick={props.onRemove} className={classes.removeBtn}>
+        X
+      </Button>
       <div className={classes.answerContainer}>
         <Input
           defaultValue={props.answer.title}

@@ -19,3 +19,10 @@
 .tag:hover {
   opacity: 1;
 }
+
+.remove {
+  color: var(--error-color);
+  cursor: pointer;
+  padding-left: var(--gap-s);
+  padding-right: 3px;
+}

@@ -1,4 +1,4 @@
-import React, { Fragment, Suspense, useContext, useEffect } from "react";
+import React, { Suspense } from "react";
 import { Layout, LoadingSpinner, ProtectedRoute } from "./components/Ui";
 import { Route, Routes } from "react-router-dom";
 

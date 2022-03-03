@@ -25,3 +25,4 @@ export { default as LoadingSpinner } from "./Elements/LoadingSpinner";
 export { default as Modal } from "./Elements/Modal/Modal";
 export { default as TextEditor } from "./Elements/TextEditor/TextEditor";
 export { default as InputSearch } from "./Elements/InputSearch";
+export { default as Snackbar } from "./Elements/SnackBar/Snackbar";

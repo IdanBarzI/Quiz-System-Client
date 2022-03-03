@@ -3,6 +3,9 @@ import { initStore } from "./store";
 const configureQestionsStore = () => {
   const actions = {
     TOGGLE_SELECTED_QUESTION: (curState, questionId) => {
+      if (questionId === -1) {
+        return { selectedQuestion: {} };
+      }
       const quesIndex = curState.questions.findIndex(
         (q) => q._id === questionId
       );
@@ -49,6 +52,13 @@ const configureQestionsStore = () => {
         questions: [...curState.questions, question],
       };
     },
+    UPDATE_QUESTION: (curState, questionId) => {
+      const quesIndex = curState.questions.findIndex(
+        (q) => q._id === questionId
+      );
+      curState.selectedQuestion = curState.questions[quesIndex];
+      return { selectedQuestion: { ...curState.questions[quesIndex] } };
+    },
     SET_QUESTIONS_SHOW: (curState, questions) => {
       return {
         questionsToShow: [...questions],
@@ -66,6 +76,11 @@ const configureQestionsStore = () => {
     SET_TAGS: (curState, tags) => {
       return {
         tags: [...tags],
+      };
+    },
+    ADD_TAG: (curState, tag) => {
+      return {
+        tags: [...curState.tags, tag],
       };
     },
   };

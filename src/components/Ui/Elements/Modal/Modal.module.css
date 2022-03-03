@@ -16,7 +16,7 @@
   z-index: 100;
   overflow: hidden;
   color: var(--primary-color);
-  background-color: aliceblue;
+  background-color: var(--oppesit-secondery-color);
 }
 
 .scrollableModal {
@@ -26,7 +26,7 @@
   width: 80%;
   z-index: 100;
   color: var(--primary-color);
-  background-color: aliceblue;
+  background-color: var(--oppesit-secondery-color);
   height: 80vh;
   overflow: scroll;
 }
@@ -34,7 +34,7 @@
 .header {
   display: flex;
   align-items: center;
-  color: aliceblue;
+  color: var(--primary-color);
   justify-content: center;
   background: var(--purple-color);
   padding: 1rem;

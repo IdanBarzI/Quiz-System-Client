@@ -1,25 +1,27 @@
-import React, { useContext, useEffect, useReducer } from "react";
+import React, { useContext, useEffect, useReducer, useRef } from "react";
 import { useStore } from "../../../store/store";
 import useFetch from "../../../hooks/use-fetch";
-import useAxiosFetch from "../../../hooks/use-axios";
 import {
   Modal,
   Typography,
   TextEditor,
   Button,
   LoadingSpinner,
-  Input,
   InputSearch,
+  Snackbar,
 } from "../../Ui";
 import AnswersManager from "./AnswersManager";
+import AddTag from "./Tags/AddTag/AddTag";
 import AppContext from "../../../context/AppContext";
 import {
   onFocusOut,
   setQuestionType,
   addTag,
+  removeTag,
   UPDATE_FORM,
   UPDATE_QUESTION_TYPE,
   ADD_TAG,
+  REMOVE_TAG,
 } from "../../../lib/questionFormUtils";
 import QuestionAndTags from "../questionAnbdTags/QuestionAndTags";
 import classes from "./NewQuestion.module.css";
@@ -48,19 +50,43 @@ const formsReducer = (state, action) => {
         tags: [...state.tags, tag],
       };
 
+    case REMOVE_TAG: {
+      const { tags } = action.data;
+      return {
+        ...state,
+        tags: [...tags],
+      };
+    }
+
     default:
       return state;
   }
 };
 
-const NewQuestion = () => {
-  const [{ selectedQuestion, questions, tags }, dispatchStore] = useStore();
+const NewQuestion = (props) => {
+  console.log("RENDERING_NEWQUESTION");
+  const [{ selectedQuestion, tags }, dispatchStore] = useStore();
 
-  const { data, fetchError, isLoadingTags } = useAxiosFetch(`/tags`);
+  const { isLoadinggg, errorrr, sendRequest: sendGetTagsRequest } = useFetch();
+  const getTagsHandler = async () => {
+    await sendGetTagsRequest(
+      {
+        url: `http://localhost:5000/tags`,
+        method: "GET",
+      },
+      (tags) => {
+        dispatchStore("SET_TAGS", tags);
+      }
+    );
+  };
+
+  useEffect(() => {
+    getTagsHandler();
+  }, []);
 
   const { fieldOfStudy } = useContext(AppContext);
 
-  const isEdit = selectedQuestion ? true : false;
+  const isEdit = selectedQuestion._id ? true : false;
   const questionTitle = selectedQuestion?.title || "";
   const questionType = selectedQuestion?.isMultipleAnswers || false;
   const questionTags = selectedQuestion?.tags || [];
@@ -80,40 +106,82 @@ const NewQuestion = () => {
   };
 
   const [formState, dispatch] = useReducer(formsReducer, initialState);
-  console.log(formState);
-  const { isLoading, error, sendRequest: sendUpdateUserRequest } = useFetch();
-  const enterUserHandler = async () => {
+  const {
+    isLoading,
+    error,
+    sendRequest: sendUpdateQuestionRequest,
+  } = useFetch();
+
+  const {
+    isLoading: isLoadingg,
+    error: errorr,
+    sendRequest: sendAddQuestionRequest,
+  } = useFetch();
+
+  const enterQuestionHandler = async () => {
     if (formState.isFormValid) {
-      await sendUpdateUserRequest(
-        {
-          url: `http://localhost:5000/qusetions`,
-          method: "POST",
-          body: {
-            title: formState.title.value,
-            isMultipleAnswers: formState.isMultipleAnswers,
-            tags: formState.tags,
-            answers: formState.answers.value,
-          },
-        },
-        (question) => {
-          console.log(questions);
-          dispatchStore("ADD_QUESTION", question);
+      if (isEdit) {
+        try {
+          await sendUpdateQuestionRequest(
+            {
+              url: `http://localhost:5000/qusetions`,
+              method: "PATCH",
+              body: {
+                _id: selectedQuestion._id,
+                title: formState.title.value,
+                isMultipleAnswers: formState.isMultipleAnswers,
+                tags: formState.tags,
+                answers: formState.answers.value,
+              },
+            },
+            (question) => {
+              console.log("UPDATE_QUESTION");
+              snackbarRef.current.show("Question Updated", "success");
+              dispatchStore("UPDATE_QUESTION", question._id);
+            }
+          );
+        } catch (e) {
+          console.log("UPDATE_QUESTION_FAIL");
+          snackbarRef.current.show(error, "fail");
         }
-      );
+        if (error !== null) {
+          snackbarRef.current.show(error, "fail");
+        }
+      } else {
+        try {
+          await sendAddQuestionRequest(
+            {
+              url: `http://localhost:5000/qusetions`,
+              method: "POST",
+              body: {
+                title: formState.title.value,
+                isMultipleAnswers: formState.isMultipleAnswers,
+                tags: formState.tags,
+                answers: formState.answers.value,
+              },
+            },
+            (question) => {
+              console.log("ADD_QUESTION");
+              snackbarRef.current.show("Question Added", "success");
+              dispatchStore("ADD_QUESTION", question);
+            }
+          );
+        } catch (e) {}
+        if (errorr) {
+          snackbarRef.current.show(errorr, "fail");
+        }
+      }
     }
   };
 
+  const snackbarRef = useRef(null);
   const handleSubmitChanges = async (e) => {
     e.preventDefault();
-    enterUserHandler();
+    enterQuestionHandler();
   };
 
   return (
-    <Modal
-      onCancle={() => dispatchStore("TOGGLE_MODAL_EDIT")}
-      title={fieldOfStudy}
-      scroll={true}
-    >
+    <Modal onCancle={() => props.onCancle()} title={fieldOfStudy} scroll={true}>
       <form onSubmit={(e) => handleSubmitChanges(e)}>
         <div className={classes.question}>
           <div className={classes.questionType}>
@@ -157,21 +225,30 @@ const NewQuestion = () => {
               name="Tags"
               onSelect={(tag) => addTag(dispatch, tag)}
             />
-            <QuestionAndTags tags={formState.tags} />
+            <QuestionAndTags
+              tags={formState.tags}
+              isRemoveable={true}
+              removeTag={(tag) => removeTag(dispatch, tag, formState)}
+            />
           </div>
           <div className={classes.actions}>
-            {isLoading ? (
+            {isLoading || isLoadingg ? (
               <LoadingSpinner />
             ) : (
-              <Button type="submit">Submit Changes</Button>
+              <Button type="submit" className={classes.submitBtn}>
+                Submit
+              </Button>
             )}
           </div>
         </div>
       </form>
+
+      <div>
+        <AddTag />
+      </div>
+      <Snackbar ref={snackbarRef} message="Something went wrong" type="fail" />
     </Modal>
   );
 };
-
-//onSelect={console.log(tag)}
 
 export default NewQuestion;

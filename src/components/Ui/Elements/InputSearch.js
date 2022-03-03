@@ -7,7 +7,6 @@ const InputSearch = (props) => {
   const [list, setList] = useState(props.list);
   const ogList = props.list;
   const wrapTag = useRef();
-  console.log("asdasdasdasd");
 
   useEffect(() => {
     window.addEventListener("click", closeList);
