@@ -7,8 +7,36 @@
 
 .form {
   width: 50vw;
+  padding: 32px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--gap);
+}
+
+.formRow {
+  width: 80%;
+}
+
+/*the container must be positioned relative:*/
+select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -webkit-padding-end: 20px;
+  -moz-padding-end: 20px;
+  -webkit-padding-start: 2px;
+  -moz-padding-start: 2px;
+  background-color: var(--purple-color);
+  background-position: center right;
+  background-repeat: no-repeat;
+  border: none;
+  border-radius: 2px;
+  color: var(--primary-color);
+  font-size: 1rem;
+  margin: 0;
+  overflow: hidden;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

@@ -1,11 +1,9 @@
-import React, { useState, useReducer, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import "./LoginForm.css";
+import React, { useReducer, useContext } from "react";
+import useFetch from "../../hooks/use-fetch";
 import AppContext from "../../context/AppContext";
-import { Input, Icon, ToolTip } from "../Ui";
-import serverAccess from "../../api/serverAccess";
-import { UPDATE_FORM, onFocusOut } from "../../lib/loginFormUtils";
-import LoadingAnimation from "../Ui/Elements/LoadingAnimation/LoadingAnimation";
+import { Input, Button } from "../Ui";
+import { UPDATE_FORM, RESET_FORM, onFocusOut } from "../../lib/loginFormUtils";
+import "./LoginForm.css";
 
 const initialState = {
   email: { value: "", touched: false, hasError: false, error: "" },
@@ -14,6 +12,7 @@ const initialState = {
 };
 
 const formsReducer = (state, action) => {
+  console.log(action.type);
   switch (action.type) {
     case UPDATE_FORM:
       const { name, value, touched, hasError, error, isFormValid } =
@@ -23,6 +22,11 @@ const formsReducer = (state, action) => {
         [name]: { ...state[name], touched, value, hasError, error },
         isFormValid,
       };
+    case RESET_FORM:
+      return {
+        ...initialState,
+      };
+
     default:
       return state;
   }
@@ -30,55 +34,34 @@ const formsReducer = (state, action) => {
 
 const LoginForm = (props) => {
   const [formState, dispatch] = useReducer(formsReducer, initialState);
-  const { setUser, setToken } = useContext(AppContext);
-  const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
+  const { login } = useContext(AppContext);
+  const { isLoading, error, sendRequest: sendLoginRequest } = useFetch();
 
-  const formSubmissionHandler = (event) => {
-    event.preventDefault();
-    setIsLoading(true);
+  const loginHandler = async () => {
     if (formState.isFormValid) {
-      serverAccess
-        .post("/users/login", {
-          email: formState.email.value,
-          password: formState.password.value,
-        })
-        .then(function (response) {
-          setIsLoading(false);
-          if (response.status !== 200) {
-            //show error to the user
-            return;
-          }
-          setUser(response.data.user);
-          setToken(response.data.token);
-          navigate("/admin/main-menu", { replace: true });
-        })
-        .catch(function (error) {
-          setIsLoading(false);
-          //show error to the user
-          console.log(error);
-        });
-      console.log(isLoading);
+      await sendLoginRequest(
+        {
+          url: `${process.env.REACT_APP_BASE_URL}/users/login`,
+          method: "POST",
+          body: {
+            email: formState.email.value,
+            password: formState.password.value,
+          },
+        },
+        (data) => {
+          login(data.user, data.token);
+        }
+      );
     }
   };
 
-  const formReset = (event) => {
+  const formSubmissionHandler = (event) => {
     event.preventDefault();
+    loginHandler();
   };
 
   return (
-    <form
-      className="login-form"
-      onSubmit={formSubmissionHandler}
-      onReset={formReset}
-    >
-      <div className="top-actions">
-        <button type="reset" className="form-btn btn-reset">
-          <ToolTip text="Reset Form">
-            <Icon i="redo" />
-          </ToolTip>
-        </button>
-      </div>
+    <form className="login-form" onSubmit={formSubmissionHandler}>
       <div className="form-control email">
         <Input
           name="Email"
@@ -105,13 +88,10 @@ const LoginForm = (props) => {
         />
       </div>
       <div className="form-actions">
-        {isLoading ? (
-          <LoadingAnimation />
-        ) : (
-          <button type="submit" className="form-btn btn-login">
-            LOGIN
-          </button>
-        )}
+        <Button type="submit" isLoading={isLoading} className="btn-login">
+          LOGIN
+        </Button>
+        {error && <p className="errorMsg">{error}</p>}
       </div>
     </form>
   );

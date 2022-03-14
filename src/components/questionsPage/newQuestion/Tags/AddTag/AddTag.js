@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useStore } from "../../../../../store/store";
 import useFetch from "../../../../../hooks/use-fetch";
 
-import { Input, Button, LoadingSpinner } from "../../../../Ui";
+import { Input, Button } from "../../../../Ui";
 import classes from "./AddTag.module.css";
 
 const AddTag = (props) => {
@@ -31,17 +31,19 @@ const AddTag = (props) => {
 
   return (
     <form className={classes.tagForm} onSubmit={(e) => handleSubmit(e)}>
-      <Input
-        name="New Tag"
-        notRequired={true}
-        onChange={(e) => setTitle(e.target.value)}
-      />
+      <div className={classes.input}>
+        <Input
+          name="New Tag"
+          onChange={(e) => setTitle(e.target.value)}
+          touched
+          hasError
+          errorMsg={error}
+        />
+      </div>
       <div>
-        {isLoading ? (
-          <LoadingSpinner />
-        ) : (
-          <Button type="submit">Add Tag</Button>
-        )}
+        <Button isLoading={isLoading} type="submit">
+          Submit New Tag
+        </Button>
       </div>
     </form>
   );

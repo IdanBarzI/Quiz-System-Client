@@ -73,7 +73,11 @@ const NewQuestionAnswer = (props) => {
 
   return (
     <div className={classes.container}>
-      <Button onClick={props.onRemove} className={classes.removeBtn}>
+      <Button
+        type="button"
+        onClick={props.onRemove}
+        className={classes.removeBtn}
+      >
         X
       </Button>
       <div className={classes.answerContainer}>

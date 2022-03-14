@@ -8,3 +8,21 @@
   width: 20%;
   height: 100%;
 }
+
+.answerEnter {
+  opacity: 0;
+}
+
+.answerEnterActive {
+  opacity: 1;
+  transition: opacity 1s ease-out;
+}
+
+.answerExit {
+  opacity: 1;
+}
+
+.answerExitActive {
+  opacity: 0;
+  transition: opacity 1s ease-out;
+}

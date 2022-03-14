@@ -5,14 +5,13 @@
   width: 100%;
 }
 
-input {
-  accent-color: var(--purple-color);
-}
-
 .answerContainer {
-  width: 100%;
+  width: 500px;
 }
 
 .removeBtn {
-  border-radius: 40%;
+  border-radius: 50%;
+  padding: 3px;
+  width: 30px;
+  background-color: transparent;
 }

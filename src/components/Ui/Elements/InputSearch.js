@@ -39,6 +39,7 @@ const InputSearch = (props) => {
   };
 
   const handelOnChange = (filterString = "") => {
+    setIsOpen(true);
     var newList = list.filter((i) =>
       i.title.trim().toLowerCase().includes(filterString.trim().toLowerCase())
     );

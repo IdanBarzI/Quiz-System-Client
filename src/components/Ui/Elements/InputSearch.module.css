@@ -4,9 +4,7 @@
 }
 
 .combox {
-  /* color: var(--primary-color); */
   color: purple;
-  height: 25px;
   position: relative;
   cursor: pointer;
   border-bottom: 1px solid var(--color);
@@ -16,13 +14,12 @@
 
 .options {
   position: absolute;
-  color: purple;
-  color: var(--secondery-color);
-  background-color: var(--oppesit-secondery-color);
-  top: 25px;
-  width: 100%;
+  color: var(--orange-color);
+  left: 10px;
+  width: 95%;
   overflow: auto;
-  height: 100px;
+  max-height: 100px;
+  min-height: 25px;
 }
 
 .trigger {
@@ -30,7 +27,7 @@
 }
 
 .options li {
-  border-top: 3px solid purple;
+  border-top: 3px solid var(--orange-color);
   /* border-top: 3px solid var(--secondery-color); */
   list-style: none;
 }

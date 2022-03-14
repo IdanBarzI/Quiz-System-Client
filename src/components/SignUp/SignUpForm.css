@@ -3,11 +3,10 @@
   justify-content: space-around;
 }
 
-.form-btn {
-  border: none;
-  outline: none;
-  font-weight: bold;
-  cursor: pointer;
+.btn-reset {
+  color: var(--primary-color);
+  background-color: rgba(0, 0, 0, 0);
+  justify-self: flex-end;
 }
 
 .btn-login {
@@ -17,19 +16,4 @@
   background-color: var(--primary-color);
   border-radius: 5px;
   margin-top: 15%;
-}
-
-.btn-reset {
-  color: var(--primary-color);
-  background-color: rgba(0, 0, 0, 0);
-  justify-self: flex-end;
-}
-
-.btn-login:hover {
-  background-color: var(--secondery-color);
-}
-
-.error-msg {
-  color: red;
-  font-size: 0.8rem;
 }

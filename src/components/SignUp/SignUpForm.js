@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import useFetch from "../../hooks/use-fetch";
+import validator from "validator";
+import AppContext from "../../context/AppContext";
+import { Input, Button } from "../Ui";
 import "./SignUpForm.css";
 
-import { Input, Icon, ToolTip } from "../Ui";
-import validator from "validator";
-
 const SignUpForm = (props) => {
+  const { isLoading, error, sendRequest: sendSignupRequest } = useFetch();
+  const { login } = useContext(AppContext);
   const [enteredEmail, setEnteredEmail] = useState("");
   const [enteredPassword, setEnteredPassword] = useState("");
   const [enteredConfirmPassword, setEnteredConfirmPassword] = useState("");
@@ -16,7 +19,6 @@ const SignUpForm = (props) => {
 
   const emailInputChangeHandler = (event) => {
     setEnteredEmail(event.target.value);
-    console.log(event.target.value);
   };
 
   const passwordInputChangeHandler = (event) => {
@@ -28,62 +30,62 @@ const SignUpForm = (props) => {
   };
 
   const validateEmail = () => {
-    if (!validator.isEmail(enteredEmail)) {
+    if (validator.isEmail(enteredEmail)) {
+      setEnteredEmailIsValid(true);
+    } else {
       setEmailError("Enter a valid Email!");
       setEnteredEmailIsValid(false);
-      return false;
     }
-
-    setEnteredEmailIsValid(true);
-    return true;
   };
 
   const validatePassword = () => {
     if (enteredConfirmPassword !== enteredPassword) {
-      setPasswordError("Enter Passwords are not the same!");
+      setPasswordError("Passwords are not match!");
       setEnteredPasswordIsValid(false);
-      return false;
+    } else if (enteredPassword.trim().length < 6) {
+      setPasswordError("Password must have at least 6 characters!");
+      setEnteredPasswordIsValid(false);
+    } else {
+      setEnteredPasswordIsValid(true);
     }
+  };
 
-    setEnteredPasswordIsValid(true);
-    return true;
+  const signupHandler = async () => {
+    if (!enteredEmailIsValid && !enteredPassword) {
+      await sendSignupRequest(
+        {
+          url: `${process.env.REACT_APP_BASE_URL}/users`,
+          method: "POST",
+          body: {
+            email: enteredEmail,
+            password: enteredPassword,
+          },
+        },
+        (data) => {
+          console.log(data);
+          login(data.user, data.token);
+        }
+      );
+    }
   };
 
   const formSubmissionHandler = (event) => {
     event.preventDefault();
-    setEnteredFormIsValid(true);
-    if (!validateEmail() && validatePassword()) {
-      return;
-    }
-  };
-
-  const formReset = (event) => {
-    event.preventDefault();
-    setEnteredPasswordIsValid(true);
-    setEnteredEmailIsValid(true);
-    setEnteredFormIsValid(true);
+    signupHandler();
   };
 
   return (
-    <form
-      className="sign-up-form"
-      onSubmit={formSubmissionHandler}
-      onReset={formReset}
-    >
-      <div className="top-actions">
-        <button type="reset" className="form-btn btn-reset">
-          <ToolTip text="Reset Form">
-            <Icon i="redo" />
-          </ToolTip>
-        </button>
-      </div>
+    <form className="sign-up-form" onSubmit={formSubmissionHandler}>
       <div className="form-control email">
         <Input
           name="Email"
           i="envelope"
           enteredvalueIsValid={enteredEmailIsValid}
           errorMsg={emailError}
+          hasError={!enteredEmailIsValid}
+          touched
           onChange={emailInputChangeHandler}
+          onBlur={validateEmail}
         />
       </div>
       <div className="form-control password">
@@ -100,18 +102,22 @@ const SignUpForm = (props) => {
           type="password"
           name="Confirm Password"
           i="lock"
+          touched
           enteredvalueIsValid={enteredPasswordIsValid}
           errorMsg={passwordError}
+          hasError={!enteredPasswordIsValid}
           onChange={confirmPasswordInputChangeHandler}
+          onBlur={validatePassword}
         />
       </div>
       {!enteredFormIsValid && (
         <p className="error-msg">Your password or email are incorrect</p>
       )}
       <div className="form-actions">
-        <button type="submit" className="form-btn btn-login">
+        <Button isLoading={isLoading} type="submit" className="btn-login">
           SIGNUP
-        </button>
+        </Button>
+        {error && <p className="errorMsg">{error}</p>}
       </div>
     </form>
   );

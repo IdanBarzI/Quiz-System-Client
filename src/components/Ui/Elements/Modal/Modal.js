@@ -1,9 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import CSSTransition from "react-transition-group/CSSTransition";
 import classes from "./Modal.module.css";
 
 const Backdrop = (props) => {
-  return <div className={classes.backdrop} onClick={props.onCancle} />;
+  return (
+    <>
+      {props.show && (
+        <div className={classes.backdrop} onClick={props.onCancle} />
+      )}
+    </>
+  );
 };
 
 const ModalOverlay = (props) => {
@@ -23,22 +30,42 @@ const ModalOverlay = (props) => {
   );
 };
 
+const animationTiming = {
+  enter: 400,
+  exit: 600,
+};
+
 const Modal = (props) => {
   return (
     <>
       {ReactDOM.createPortal(
-        <Backdrop onConfirm={props.onConfirm} onCancle={props.onCancle} />,
-        document.getElementById("backdrop-root")
-      )}
-      {ReactDOM.createPortal(
-        <ModalOverlay
-          children={props.children}
-          scroll={props.scroll}
-          title={props.title}
-          message={props.message}
+        <Backdrop
+          show={props.show}
           onConfirm={props.onConfirm}
           onCancle={props.onCancle}
         />,
+        document.getElementById("backdrop-root")
+      )}
+      {ReactDOM.createPortal(
+        <CSSTransition
+          mountOnEnter
+          unmountOnExit
+          in={props.show}
+          timeout={animationTiming}
+          classNames={{
+            enterActive: classes.modalOpen,
+            exitActive: classes.modalClose,
+          }}
+        >
+          <ModalOverlay
+            children={props.children}
+            scroll={props.scroll}
+            title={props.title}
+            message={props.message}
+            onConfirm={props.onConfirm}
+            onCancle={props.onCancle}
+          />
+        </CSSTransition>,
         document.getElementById("overlay-root")
       )}
     </>

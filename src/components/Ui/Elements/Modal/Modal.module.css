@@ -19,6 +19,14 @@
   background-color: var(--oppesit-secondery-color);
 }
 
+.modalOpen {
+  animation: openModal 0.4s ease-in-out forwards;
+}
+
+.modalClose {
+  animation: closeModal 0.6s ease-in-out forwards;
+}
+
 .scrollableModal {
   position: fixed;
   top: 10vh;
@@ -66,5 +74,29 @@
   .modal {
     left: calc(50% - 20rem);
     width: 40rem;
+  }
+}
+
+@keyframes openModal {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes closeModal {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(0);
   }
 }

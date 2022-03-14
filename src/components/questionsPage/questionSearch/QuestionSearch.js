@@ -6,6 +6,7 @@ import { Input } from "../../Ui";
 const QuestionSearch = (props) => {
   const [{ questions }, dispatch] = useStore();
   const handleSearch = (e) => {
+    console.log(e);
     dispatch(
       "SET_QUESTIONS_SHOW",
       questions.filter(

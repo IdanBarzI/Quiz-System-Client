@@ -3,7 +3,6 @@
   width: auto;
   display: flex;
   position: relative;
-  display: flex;
   justify-content: center;
   align-items: flex-end;
   cursor: pointer;
@@ -14,25 +13,22 @@
 .icon {
   position: absolute;
   color: var(--primary-color);
-  z-index: 100;
 }
 .content {
   opacity: 0;
-  height: 100px;
-  background-color: var(--primary-bg-color);
+  height: 0px;
   padding: 10px;
+  display: flex;
+  background-color: var(--primary-bg-color);
   position: relative;
   display: inline-block;
   -webkit-transition: 1s;
   -moz-transition: 1s;
   -o-transition: 1s;
   transition: 1s;
-  margin-top: 100%;
+  margin-top: 80%;
   margin-right: -35%;
-}
-
-.continer:hover .content {
-  opacity: 1;
+  z-index: 100;
 }
 
 .content:before {
@@ -41,16 +37,16 @@
   height: 0px;
   width: 0px;
   top: -8px;
-  left: 58px;
+  left: 113px;
 
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
-
   border-bottom: 8px solid var(--primary-bg-color);
 }
 
 .continer:hover .content {
-  height: auto;
+  opacity: 1;
+  height: 150px;
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }

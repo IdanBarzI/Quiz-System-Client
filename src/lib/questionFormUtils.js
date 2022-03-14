@@ -30,8 +30,6 @@ export const removeTag = (dispatch, tag, formState) => {
   const tags = formState.tags.filter((t) => {
     return t._id !== tag._id;
   });
-  console.log(tags);
-  console.log(tag);
   dispatch({
     type: REMOVE_TAG,
     data: { tags },
@@ -47,6 +45,28 @@ export const validateInput = (name, value) => {
         error = "Title cannot be empty";
       }
       break;
+    case "textBelow":
+      if (value.trim() === "") {
+        hasError = true;
+        error = "Text Below cannot be empty";
+      }
+      break;
+    case "answers":
+      const correctAnswers = value.filter((a) => {
+        return a.isCorrect;
+      });
+      if (value.length === 0) {
+        hasError = true;
+        error = "Answers cannot be empty";
+        console.log("Cannot be no correct answer");
+        break;
+      }
+      if (correctAnswers.length === 0) {
+        hasError = true;
+        error = "Cannot be no correct answer";
+        console.log("Cannot be no correct answer");
+        break;
+      }
 
     default:
       break;

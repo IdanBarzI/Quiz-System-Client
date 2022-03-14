@@ -9,8 +9,10 @@ import classes from "./SetTags.module.css";
 const SetTags = (props) => {
   const [{ tags }, dispatchStore] = useStore();
   const { data, fetchError, isLoadingTags } = useAxiosFetch(`/tags`);
+
   useEffect(() => {
     dispatchStore("SET_TAGS", data);
+    console.log(data);
   }, [data]);
 
   return (

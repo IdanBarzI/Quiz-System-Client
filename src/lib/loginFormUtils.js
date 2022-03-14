@@ -5,6 +5,7 @@ import {
 import validator from "validator";
 
 export const UPDATE_FORM = UPDATE_FORM_GENERY;
+export const RESET_FORM = "RESET_FORM";
 
 export const onFocusOut = (name, value, dispatch, formState) => {
   fieldOnFocusOut(name, value, dispatch, formState, validateInput);

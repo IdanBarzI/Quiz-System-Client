@@ -1,8 +1,6 @@
 import { useState, useContext, useCallback } from "react";
-import AppContext from "../context/AppContext";
 
 const useFetch = () => {
-  const { token } = useContext(AppContext);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -13,7 +11,7 @@ const useFetch = () => {
       const response = await fetch(requestConfig.url, {
         method: requestConfig.method ? requestConfig.method : "GET",
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
           "Content-Type": "application/json",
         },
         body: requestConfig.body ? JSON.stringify(requestConfig.body) : null,

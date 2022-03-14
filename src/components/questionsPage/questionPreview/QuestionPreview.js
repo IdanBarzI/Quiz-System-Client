@@ -4,16 +4,18 @@ import { Modal, Icon, Typography } from "../../Ui";
 import { useStore } from "../../../store/store";
 
 const QuestionPreview = (props) => {
+  console.log("RENDER_QuestionPreview");
   const { selectedQuestion } = useStore()[0];
 
   return (
     <Modal
+      show={props.show}
       onCancle={() => props.onCancle()}
       title={selectedQuestion.title}
       scroll={false}
     >
       <div className={classes.answers}>
-        {selectedQuestion.answers.map((answer, index) => {
+        {selectedQuestion?.answers?.map((answer, index) => {
           return (
             <div className={classes.answer} key={index}>
               <div className={classes.body}>

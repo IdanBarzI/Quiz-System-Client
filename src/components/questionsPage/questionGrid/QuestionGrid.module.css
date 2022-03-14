@@ -2,12 +2,19 @@
   padding: 1rem 2rem;
   background-color: var(--oppesit-primary-color);
 }
+.tableContainer {
+  width: 100%;
+  overflow-x: auto;
+  min-height: 450px;
+}
 .table {
+  width: 100%;
   background-color: var(--oppesit-secondery-color);
   color: var(--primary-color);
 }
 .head {
   background-color: var(--oppesit-secondery-color);
+  border-bottom: 1px solid rgba(224, 224, 224, 1);
 }
 .row {
   cursor: pointer;
@@ -16,10 +23,35 @@
   padding-left: 10%;
 }
 .cell {
-  color: var(--primary-color);
+  padding: 16px;
 }
 .buttons {
   display: flex;
   justify-content: center;
   gap: 10px;
+}
+
+.fadeEnter {
+  opacity: 0;
+}
+
+.fadeEnterActive {
+  opacity: 1;
+  transition: opacity 1s ease-out;
+}
+
+.fadeExit {
+  opacity: 1;
+}
+
+.fadeExitActive {
+  opacity: 0;
+  transition: opacity 1s ease-out;
+}
+
+.td {
+  display: table-cell;
+  cursor: progress;
+  padding: 16px;
+  height: 70px;
 }

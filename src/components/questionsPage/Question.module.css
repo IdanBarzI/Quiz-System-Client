@@ -13,3 +13,8 @@
   padding: 1rem 0.5rem;
   background-color: var(--oppesit-primary-color);
 }
+
+.error {
+  font-size: 3rem;
+  color: var(--error-color);
+}

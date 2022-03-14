@@ -3,18 +3,20 @@ import classes from "./QuestionAndTags.module.css";
 
 const QuestionAndTags = ({ question, tags, isRemoveable, removeTag }) => {
   const renderTags = () => {
-    return tags.map((tag, indx) => {
-      return (
-        <div key={indx} className={classes.tag}>
-          <span>{tag.title}</span>
-          {isRemoveable && (
-            <span className={classes.remove} onClick={() => removeTag(tag)}>
-              X
-            </span>
-          )}
-        </div>
-      );
-    });
+    if (tags.length > 0) {
+      return tags.map((tag, indx) => {
+        return (
+          <div key={indx} className={classes.tag}>
+            <span>{tag.title}</span>
+            {isRemoveable && (
+              <span className={classes.remove} onClick={() => removeTag(tag)}>
+                X
+              </span>
+            )}
+          </div>
+        );
+      });
+    }
   };
 
   return (

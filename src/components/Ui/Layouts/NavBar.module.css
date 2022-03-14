@@ -41,3 +41,16 @@
   position: absolute;
   left: 0;
 }
+
+.select {
+  margin-top: 20px;
+}
+
+.btn {
+  margin-top: 20px;
+}
+
+.settingsBox {
+  display: flex;
+  gap: 20px;
+}

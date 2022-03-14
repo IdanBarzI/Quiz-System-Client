@@ -3,7 +3,7 @@ import { useStore } from "../../store/store";
 import NewQuestion from "./newQuestion/NewQuestion";
 import QuestionGrid from "./questionGrid/QuestionGrid";
 import useFetch from "../../hooks/use-fetch";
-import { Button, LoadingSpinner } from "../Ui";
+import { LoadingSpinner } from "../Ui";
 import classes from "./Question.module.css";
 
 const QuestionsManager = () => {
@@ -12,11 +12,10 @@ const QuestionsManager = () => {
   const getQuestionsHandler = async () => {
     await sendGetQuestionsRequest(
       {
-        url: `http://localhost:5000/qusetions`,
+        url: `${process.env.REACT_APP_BASE_URL}/qusetions`,
         method: "GET",
       },
       (questions) => {
-        console.log(questions);
         dispatch("SET_QUESTIONS", questions);
       }
     );
@@ -26,15 +25,12 @@ const QuestionsManager = () => {
   }, []);
 
   return (
-    <div>
-      {isLoading ? (
-        <LoadingSpinner />
-      ) : (
-        <div className={classes.question}>
-          <QuestionGrid />
-        </div>
-      )}
-    </div>
+    <>
+      <div className={classes.question}>
+        <QuestionGrid isLoading={isLoading} />
+      </div>
+      {error && <p className={`${classes.error} centered`}>{error}</p>}
+    </>
   );
 };
 

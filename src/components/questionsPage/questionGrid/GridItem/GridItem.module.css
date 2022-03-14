@@ -9,3 +9,9 @@
   justify-content: center;
   gap: 10px;
 }
+.td {
+  display: table-cell;
+  text-align: center;
+  border-bottom: 1px solid var(--primary-color);
+  padding: 16px;
+}

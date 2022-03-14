@@ -1,29 +1,34 @@
-import React, { useState, useCallback, Fragment } from "react";
+import React, { useState, useCallback, useRef, Fragment } from "react";
 import { useStore } from "../../../store/store";
 import useFetch from "../../../hooks/use-fetch";
+import TransitionGroup from "react-transition-group/TransitionGroup";
+import CSSTransition from "react-transition-group/CSSTransition";
 import QuestionSearch from "../questionSearch/QuestionSearch";
 import NewQuestion from "../newQuestion/NewQuestion";
 import GridItem from "./GridItem/GridItem";
-import { Typography, Line, Button, Pagination } from "../../Ui";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from "@material-ui/core";
+  Typography,
+  Line,
+  Button,
+  Pagination,
+  Snackbar,
+  Prompt,
+  Shimmer,
+} from "../../Ui";
 import classes from "./QuestionGrid.module.css";
 
 const PER_PAGE = 5;
 
 const QuestionGrid = (props) => {
-  console.log("RENDERING_GRID");
   const [{ questionsToShow }, dispatch] = useStore();
   const [openNewQuestion, setOpenNewQuestion] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [questionsPerPage, setQuestionsPerPage] = useState(PER_PAGE);
   const [isAllShown, setIsAllShown] = useState(false);
+  const [promptOnConfirm, setPromptOnConfirm] = useState(() => {});
+
+  const snackbarRef = useRef(null);
+  const promptRef = useRef(null);
 
   const indexOfLastQuestion = currentPage * questionsPerPage;
   const indexOfFirstQuestion = indexOfLastQuestion - questionsPerPage;
@@ -31,20 +36,6 @@ const QuestionGrid = (props) => {
     indexOfFirstQuestion,
     indexOfLastQuestion
   );
-
-  const { isLoading, error, sendRequest: sendUpdateUserRequest } = useFetch();
-  const enterUserHandler = async (questionId) => {
-    console.log(questionId);
-    await sendUpdateUserRequest(
-      {
-        url: `http://localhost:5000/questions/${questionId}`,
-        method: "DELETE",
-      },
-      () => {
-        dispatch("DELETE_QESTION", questionId);
-      }
-    );
-  };
 
   const paginate = (number) => {
     setCurrentPage(number);
@@ -65,6 +56,14 @@ const QuestionGrid = (props) => {
     setOpenNewQuestion(true);
   };
 
+  const promptShow = (title, content) => {
+    promptRef.current.show(title, content);
+  };
+
+  const snackbarShow = (type, content) => {
+    snackbarRef.current.show(type, content);
+  };
+
   const renderTableBody = useCallback(() => {
     if (currentQuestions && currentQuestions.length > 0) {
       return currentQuestions.map((quest) => {
@@ -72,41 +71,101 @@ const QuestionGrid = (props) => {
         if (quest.updatedAt) {
           date = new Date(quest?.updatedAt).toISOString().slice(0, 10);
         }
-        return <GridItem key={quest._id} quest={quest} date={date} />;
+        return (
+          <CSSTransition
+            key={quest._id}
+            classNames={{
+              enter: classes.fadeEnter,
+              enterActive: classes.fadeEnterActive,
+              exit: classes.fadeExit,
+              exitActive: classes.fadeExitActive,
+            }}
+            timeout={1000}
+          >
+            <GridItem
+              quest={quest}
+              date={date}
+              promptShow={promptShow}
+              setPromptOnConfirm={setPromptOnConfirm}
+              snackbarShow={snackbarShow}
+            />
+          </CSSTransition>
+        );
       });
     }
   }, [currentQuestions]);
 
+  const objectRow = (i) => {
+    return (
+      <Fragment key={i}>
+        <tr className={classes.row}>
+          <td className={classes.td}>
+            <Shimmer />
+          </td>
+          <td className={classes.td}>
+            <Shimmer />
+          </td>
+          <td className={classes.td}>
+            <Shimmer />
+          </td>
+          <td className={classes.td}>
+            <Shimmer />
+          </td>
+          <td className={classes.td}>
+            <Shimmer />
+          </td>
+        </tr>
+      </Fragment>
+    );
+  };
+
+  const renderLoadingTable = () => {
+    var rows = [];
+    for (var i = 0; i < questionsPerPage; i++) {
+      rows.push(objectRow(i));
+    }
+    return rows;
+  };
+
   return (
     <div className={classes.container}>
       <QuestionSearch />
-      <TableContainer>
-        <Table className={classes.table} aria-label="simple-table">
-          <TableHead className={classes.head}>
-            <TableRow className={classes.row}>
-              <TableCell>
+      <div className={classes.tableContainer}>
+        <table className={classes.table} aria-label="sticky table">
+          <thead className={classes.head}>
+            <tr className={classes.row}>
+              <th className={classes.head}>
                 <Typography className={classes.cell}>Id</Typography>
-              </TableCell>
-              <TableCell>
+              </th>
+              <th className={classes.head}>
                 <Typography className={classes.cell}>Title And Tags</Typography>
-              </TableCell>
-              <TableCell>
+              </th>
+              <th className={classes.head}>
                 <Typography className={classes.cell}>Last Update</Typography>
-              </TableCell>
-              <TableCell>
+              </th>
+              <th className={classes.head}>
                 <Typography className={classes.cell}>Question Type</Typography>
-              </TableCell>
-              <TableCell>
-                <Typography className={classes.cell}># of Tests</Typography>
-              </TableCell>
-              <TableCell className={classes.cellContiner}>
+              </th>
+              <th className={classes.head}>
                 <Typography className={classes.cell}>Options</Typography>
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>{renderTableBody()}</TableBody>
-        </Table>
-      </TableContainer>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {props.isLoading ? (
+              renderLoadingTable()
+            ) : questionsToShow.length > 0 ? (
+              <TransitionGroup component={Fragment}>
+                {renderTableBody()}
+              </TransitionGroup>
+            ) : (
+              <tr className="centered">
+                <td>No Questions To Show</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
       <Line justify="between">
         <Pagination
           itemsPerPage={questionsPerPage}
@@ -127,9 +186,21 @@ const QuestionGrid = (props) => {
           </Button>
         </div>
       </Line>
-      {openNewQuestion && (
-        <NewQuestion onCancle={() => setOpenNewQuestion(false)} />
-      )}
+      <NewQuestion
+        show={openNewQuestion}
+        onCancle={() => setOpenNewQuestion(false)}
+        promptShow={promptShow}
+        setPromptOnConfirm={setPromptOnConfirm}
+        snackbarShow={snackbarShow}
+      />
+
+      <Snackbar ref={snackbarRef} />
+
+      <Prompt
+        ref={promptRef}
+        confirm={() => promptOnConfirm()}
+        cancle={() => {}}
+      />
     </div>
   );
 };

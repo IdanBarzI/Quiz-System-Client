@@ -1,0 +1,81 @@
+.prompt {
+  position: fixed;
+  left: 40vmax;
+  width: 20%;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  text-align: center;
+  color: var(--primary-color);
+  background-color: var(--oppesit-third-color);
+  z-index: 110;
+  transition: all 0.3s ease-in-out;
+}
+
+.promptOpen {
+  animation: openPrompt 0.4s ease-in-out forwards;
+}
+
+.promptClose {
+  animation: closePrompt 0.6s ease-in-out forwards;
+}
+
+.title {
+  padding: 10px;
+  margin: 0;
+  background-color: var(--oppesit-primary-color);
+}
+
+.message {
+  padding: 10px;
+}
+
+.actions {
+  padding: 10px;
+  display: flex;
+  gap: var(--gap-s);
+}
+
+.btnCancle {
+  box-shadow: none;
+  border: solid var(--oppesit-primary-color);
+  background-color: var(--oppesit-third-color);
+  color: var(--secondery-color);
+}
+.btnCancle:hover {
+  background-color: var(--oppesit-secondery-color);
+  color: var(--primary-color);
+}
+
+.btnConfirm {
+  color: var(--succes-color);
+}
+
+@keyframes openPrompt {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(20%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes closePrompt {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateY(60%);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+}

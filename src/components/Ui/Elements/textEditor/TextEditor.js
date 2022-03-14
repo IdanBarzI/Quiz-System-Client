@@ -1,9 +1,15 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import JoditEditor from "jodit-react";
 
 const TextEditor = (props) => {
   const editor = useRef(null);
   const [content, setContent] = useState("");
+
+  useEffect(() => {
+    if (props.content.trim() === "") {
+      props.setContent("");
+    }
+  }, []);
 
   const config = {
     readonly: false,

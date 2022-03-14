@@ -11,7 +11,13 @@ const Button = (props) => {
         className={btnClasses}
         disabled={props.disabled}
       >
-        {props.children}
+        {props.isLoading ? (
+          <>
+            <i className="fa fa-spinner fa-spin"></i>Loading
+          </>
+        ) : (
+          props.children
+        )}
       </button>
     </>
   );

@@ -10,6 +10,7 @@ export { default as Article } from "./Layouts/Article";
 export { default as Card } from "./Layouts/Card";
 export { default as Typography } from "./Layouts/Typography/Typography";
 export { default as Pagination } from "./Layouts/pagination/Pagination";
+export { default as Shimmer } from "./Layouts/Shimmer/Shimmer";
 
 //elements
 export { default as Button } from "./Elements/Button";
@@ -26,3 +27,4 @@ export { default as Modal } from "./Elements/Modal/Modal";
 export { default as TextEditor } from "./Elements/textEditor/TextEditor";
 export { default as InputSearch } from "./Elements/InputSearch";
 export { default as Snackbar } from "./Elements/SnackBar/Snackbar";
+export { default as Prompt } from "./Elements/Prompt/Prompt";

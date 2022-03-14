@@ -6,12 +6,12 @@
 .tableContainer {
   width: 100%;
   overflow-x: auto;
+  min-height: 450px;
 }
 .table {
   width: 100%;
   background-color: var(--oppesit-secondery-color);
   color: var(--primary-color);
-  min-height: 550px;
 }
 .head {
   background-color: var(--oppesit-secondery-color);
@@ -19,6 +19,18 @@
 }
 .row {
   cursor: pointer;
+  background: linear-gradient(
+      to left,
+      var(--oppesit-primary-color) 50%,
+      var(--oppesit-third-color) 50%
+    )
+    right;
+  background-size: 200%;
+  transition: 0.5s ease-out;
+}
+.rowSelected {
+  cursor: pointer;
+  animation: select 0.5s ease-in-out forwards;
 }
 .cellContiner {
   padding-left: 10%;
@@ -38,4 +50,13 @@
   text-align: center;
   border-bottom: 1px solid var(--primary-color);
   padding: 16px;
+}
+
+@keyframes select {
+  from {
+    background-color: var(--oppesit-primary-color);
+  }
+  to {
+    background-color: var(--oppesit-third-color);
+  }
 }

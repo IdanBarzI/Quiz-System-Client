@@ -1,6 +1,4 @@
 :root {
-  --secondery-bg-color: #264eca;
-  --purple-color: #4f005f;
   --error-color: #ff0033;
   --succes-color: rgb(25, 105, 4);
 
@@ -14,10 +12,17 @@
 [data-theme="dark"] {
   --primary-color: #ffffff;
   --secondery-color: #cccccc;
+
+  --from-shimmer: hsl(0, 5%, 21%);
+  --to-shimmer: hsl(0, 5%, 11%);
+
   --orange-color: #f09630;
+  --secondery-bg-color: #264eca;
+  --purple-color: #4f005f;
 
   --oppesit-primary-color: #1b1b1b;
   --oppesit-secondery-color: #212121;
+  --oppesit-third-color: #363636;
 
   --primary-bg-color: #222222;
 }
@@ -25,10 +30,17 @@
 [data-theme="light"] {
   --primary-color: #222222;
   --secondery-color: #212121;
+
+  --from-shimmer: hsl(0, 6%, 87%);
+  --to-shimmer: hsl(0, 4%, 79%);
+
   --orange-color: #ff7b00;
+  --secondery-bg-color: #556fbb;
+  --purple-color: #a71ac3;
 
   --oppesit-primary-color: #ffffff;
   --oppesit-secondery-color: #cccccc;
+  --oppesit-third-color: #cccccc;
 
   --primary-bg-color: #cccccc;
 }
@@ -56,4 +68,18 @@ html {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.errorMsg {
+  color: var(--error-color);
+  font-size: 0.8rem;
+}
+
+.linkButton {
+  width: 100%;
+  height: 100%;
+}
+
+input {
+  accent-color: var(--purple-color);
 }
